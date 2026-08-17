@@ -3,7 +3,7 @@ import app from '../app.ts';
 import { describe, test, after } from 'node:test';
 import assert from 'node:assert';
 import pool from '../../db/pool.ts';
-import type { UserNoPassword } from '../types/user.ts';
+import type { UserNoPassword, User } from '../types/user.ts';
 
 const api = supertest(app);
 
@@ -25,7 +25,7 @@ void describe('User Requests', () => {
   });
 
   void test('GET request /api/users/:id returns one user', async () => {
-    const userId = 1;
+    const userId = 4;
 
     const testUsername = 'test';
 
@@ -39,18 +39,20 @@ void describe('User Requests', () => {
   });
 
   void test('POST request to /api/users returns 201 and creates one user', async () => {
-    const newUser = {
+    const createNewUserRequestBody = {
       username: 'new',
       password: 'password123',
       type: 'teacher'
     };
 
-    await api
+    const response = await api
       .post(baseUrl)
-      .send(newUser)
+      .send(createNewUserRequestBody)
       .expect(201);
     
-      // assert.strictEqual(response.status, 201);
+    const newUser = response.body as User;
+    
+      assert.strictEqual(newUser.username, createNewUserRequestBody.username);
   });
 });
 
