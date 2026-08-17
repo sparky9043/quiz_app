@@ -3,12 +3,7 @@ import app from '../app.ts';
 import { describe, test, after } from 'node:test';
 import assert from 'node:assert';
 import pool from '../../db/pool.ts';
-
-interface User {
-  id: number;
-  username: string;
-  type: 'teacher' | 'student';
-}
+import type { UserNoPassword } from '../types/user.ts';
 
 const api = supertest(app);
 
@@ -20,7 +15,7 @@ void describe('User Requests', () => {
       .get('/api/users')
       .expect(200);
 
-    const savedUsers = response.body as User[];
+    const savedUsers = response.body as UserNoPassword[];
 
     const usernames = savedUsers.map(user => user.username);
 
