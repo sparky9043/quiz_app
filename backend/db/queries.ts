@@ -1,18 +1,16 @@
 import pool from "./pool.ts";
 
-const tableName = 'users';
-
 const getUsers = async () => {
   const { rows } = await pool.query(`
-    SELECT * FROM $1;
-  `, [tableName]);
+    SELECT * FROM users;
+  `);
 
   return rows;
 };
 
 const getUsersNoPassword = async () => {
   const { rows } = await pool.query(`
-    SELECT id, username, type FROM $1;
+    SELECT id, username, type FROM users;
   `);
 
   return rows;
