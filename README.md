@@ -15,14 +15,3 @@ Teachers can create questions and quizzes, while students can take the quizzes a
 2) Take quizzes using an online quiz generator
 3) Have their quizzes automatically graded
 4) View their grades
-
-## Tech Stack
-### Backend
-1) Server: Node/Express + TypeScript
-2) Database: Supabase (PostgreSQL)
-3) Authentication: bcrypt
-4) Authorization: JSON Web Token
-
-### Frontend
-1) Library/Framework: React + TypeScript
-2) Style: TailwindCSS
