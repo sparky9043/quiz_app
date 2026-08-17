@@ -2,21 +2,21 @@ import type { NewUserPasswordHashed, User, UserNoPassword } from "../src/types/u
 import pool from "./pool.ts";
 
 // Returns Users list with password hash
-const getUsers = async () => {
+const getUsers = async (): Promise<User[]> => {
   const { rows } = await pool.query(`
     SELECT * FROM users;
   `);
 
-  return rows;
+  return rows as User[];
 };
 
 // Returns Users list with no password hash
-const getUsersNoPassword = async () => {
+const getUsersNoPassword = async (): Promise<UserNoPassword[]> => {
   const { rows } = await pool.query(`
     SELECT id, username, type FROM users;
   `);
 
-  return rows;
+  return rows as UserNoPassword[];
 };
 
 // Return One User with password hash
@@ -29,8 +29,8 @@ const getUserById = async (userId: number): Promise<User> => {
     throw new Error('The user does not exist');
   }
 
-  return rows[0];
-}
+  return rows[0] as User;
+};
 
 // Return One User with No Password Hash
 const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> => {
@@ -42,8 +42,8 @@ const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> =>
     throw new Error('The user does not exist');
   }
 
-  return rows[0];
-}
+  return rows[0] as UserNoPassword;
+};
 
 // Create One User and return with password
 const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Promise<User> => {
@@ -61,7 +61,7 @@ const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Prom
     throw new Error('Internal Server Error: could not create new user');
   }
 
-  return rows[0];
+  return rows[0] as User;
 };
 
 export default {
