@@ -38,12 +38,10 @@ const createNewUser = async (newUserRequestBody: NewUser) => {
     type: newUserRequestBody.type,
     password_hash: passwordHash,
   }
-  
-  console.log(newUserPasswordHashed);
 
-  // const newUser = await queries.createNewUser(newUserRequestBody);
+  const newUser = await queries.createNewUser(newUserPasswordHashed);
 
-
+  return newUser;
 };
 
 
