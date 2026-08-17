@@ -11,6 +11,10 @@ export interface User extends UserNoPassword {
   password_hash: string;
 }
 
+export interface NewUserPasswordHashed extends BaseUser {
+  password_hash: string;
+}
+
 export interface NewUser extends BaseUser {
   password: string;
 };
