@@ -27,19 +27,21 @@ users.get('/:id', async (req: Request<{ id: string}>, res) => {
 
 // POST request to /api/users creates new user
 users.post('/', async (req: Request<unknown, unknown, NewUser>, _res) => {
-  const newUser = req.body;
+  const newUserRequestBody = req.body;
   const userTypes = ['student', 'teacher'];
 
   // Make sure the username, type, and passwords are filled out
   // Make sure the types are either student or teacher
   if (
-    !newUser.username ||
-    !newUser.type ||
-    !newUser.password ||
-    !userTypes.includes(newUser.type)
+    !newUserRequestBody.username ||
+    !newUserRequestBody.type ||
+    !newUserRequestBody.password ||
+    !userTypes.includes(newUserRequestBody.type)
   ) {
     throw new Error('Please make sure the username, password and type are correctly filled out');
   }
+
+  const newUser = await userService.createNewUser(newUserRequestBody);
 
   console.log(newUser);
 
