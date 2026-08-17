@@ -7,11 +7,11 @@ export interface UserNoPassword extends BaseUser {
   id: number;
 }
 
-export interface User extends UserNoPassword {
+export interface NewUserPasswordHashed extends BaseUser {
   password_hash: string;
 }
 
-export interface NewUserPasswordHashed extends BaseUser {
+export interface User extends NewUserPasswordHashed {
   password_hash: string;
 }
 
