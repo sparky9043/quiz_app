@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const SERVER_PORT = process.env.PORT;
+const SERVER_PORT = process.env.SERVER_PORT;
 
 const DB_HOST = process.env.DB_HOST;
 
