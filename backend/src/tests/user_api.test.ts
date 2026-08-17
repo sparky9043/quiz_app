@@ -7,12 +7,14 @@ import type { UserNoPassword } from '../types/user.ts';
 
 const api = supertest(app);
 
+const baseUrl = '/api/users';
+
 void describe('User Requests', () => {
   void test('GET users to /api/users returns all users', async () => {
     const testUsername = 'test';
 
     const response = await api
-      .get('/api/users')
+      .get(baseUrl)
       .expect(200);
 
     const savedUsers = response.body as UserNoPassword[];
@@ -20,6 +22,20 @@ void describe('User Requests', () => {
     const usernames = savedUsers.map(user => user.username);
 
     assert(usernames.includes(testUsername));
+  });
+
+  void test('GET request /api/users/:id returns one user', async () => {
+    const userId = 1;
+
+    const testUsername = 'test';
+
+    const response = await api
+      .get(`${baseUrl}/${userId}`)
+      .expect(200);
+
+    const savedUser = response.body as UserNoPassword;
+    
+    assert.strictEqual(savedUser.username, testUsername);
   });
 });
 
