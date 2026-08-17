@@ -19,7 +19,7 @@ users.get('/:id', async (req: Request<{ id: string}>, res) => {
     throw new Error('invalid Id');
   }
 
-  const savedUser = await userService.getUserById(userId);
+  const savedUser = await userService.getUserByIdNoPassword(userId);
 
   res.json(savedUser);
 });
