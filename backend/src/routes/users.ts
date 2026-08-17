@@ -24,4 +24,10 @@ users.get('/:id', async (req: Request<{ id: string}>, res) => {
   res.json(savedUser);
 });
 
+users.post('/', async (req, res) => {
+  console.log(req.body);
+
+  res.status(201).json({ message: 'success' });
+});
+
 export default users;

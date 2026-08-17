@@ -37,6 +37,21 @@ void describe('User Requests', () => {
     
     assert.strictEqual(savedUser.username, testUsername);
   });
+
+  void test('POST request to /api/users returns 201 and creates one user', async () => {
+    const newUser = {
+      username: 'new',
+      password: 'password123',
+      type: 'teacher'
+    };
+
+    await api
+      .post(baseUrl)
+      .send(newUser)
+      .expect(201);
+    
+      // assert.strictEqual(response.status, 201);
+  });
 });
 
 
