@@ -2,10 +2,11 @@ import type { NextFunction, Request, Response } from "express";
 import { Router } from "express";
 import type { UserLoginCredentials } from "../types/user.ts";
 import loginService from "../service/loginService.ts";
+import { LoginSuccessObject } from "../types/login.ts";
 
 const loginRouter = Router();
 
-loginRouter.post('/', async (req: Request<unknown, unknown, UserLoginCredentials>, res: Response, next: NextFunction) => {
+loginRouter.post('/', async (req: Request<unknown, unknown, UserLoginCredentials>, res: Response<LoginSuccessObject>, next: NextFunction) => {
   try {
     const userLoginCredentals = req.body;
 
