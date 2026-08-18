@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { DatabaseError } from "pg";
+import { HttpError } from "../errors/http.ts";
 // import { DatabaseError } from "pg";
 
 const getErrorInfoJson = (err: DatabaseError) => {
@@ -14,6 +15,7 @@ const getErrorInfoJson = (err: DatabaseError) => {
 };
 
 const databaseErrorHandler = (err: unknown, _req: Request, res: Response, next: NextFunction) => {
+  console.log('inside databaseErrorhandler');
   if (res.headersSent) {
     return next(err);
   }
@@ -29,8 +31,19 @@ const databaseErrorHandler = (err: unknown, _req: Request, res: Response, next: 
   }
 };
 
+const httpErrorHandler = (err: unknown, _req: Request, res: Response, next: NextFunction) => {
+  console.log('inside httpErrorHandler');
+  if (err instanceof HttpError) {
+    res
+      .status(err.status)
+      .json({ status: err.status, error: err.message });
+  } else {
+    next(err);
+  }
+};
+
 const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
-  console.log('code reached');
+  console.log('inside errorHandler');
   if (err instanceof Error) {
     res.status(500).json({ error: err.message });
   }
@@ -38,5 +51,6 @@ const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFun
 
 export default {
   databaseErrorHandler,
+  httpErrorHandler,
   errorHandler,
 };

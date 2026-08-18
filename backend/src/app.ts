@@ -11,6 +11,7 @@ app.use('/api/login', loginRouter);
 app.use('/api/users', userRouter);
 
 app.use(middleware.databaseErrorHandler);
+app.use(middleware.httpErrorHandler);
 app.use(middleware.errorHandler);
 
 export default app;
