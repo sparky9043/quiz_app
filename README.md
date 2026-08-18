@@ -15,3 +15,20 @@ Teachers can create questions and quizzes, while students can take the quizzes a
 2) Take quizzes using an online quiz generator
 3) Have their quizzes automatically graded
 4) View their grades
+
+## Models
+### User
+| column | data type |
+| :----- | :------- |
+| id | number |
+| username | string |
+| password_hash | string |
+| type | string |
+
+### Quiz
+| column | data type |
+| :----- | :------- |
+| id | number |
+| user_id | reference to **User** |
+| title | string |
+| timestamp | string |
