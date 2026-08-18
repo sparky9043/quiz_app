@@ -4,8 +4,9 @@ import middleware from "../utils/middleware.ts";
 
 const quizRouter = Router();
 
-quizRouter.get('/', middleware.tokenExtractor, async (req: Request, _res: Response, next: NextFunction) => {
+quizRouter.get('/', middleware.tokenExtractor, (req: Request, _res: Response, next: NextFunction) => {
   try {
+    // Dont forget to add async/await into this block of code
     const token = req.get('authorization');
     console.log(token);
   } catch (error) {
