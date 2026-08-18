@@ -24,6 +24,8 @@ const LOCAL_DB = process.env.LOCAL_DB;
 
 const LOCAL_PASSWORD = process.env.LOCAL_PASSWORD;
 
+const SECRET = process.env.SECRET;
+
 export default {
   SERVER_PORT,
   // Supabase
@@ -36,4 +38,6 @@ export default {
   LOCAL_USER,
   LOCAL_DB,
   LOCAL_PASSWORD,
+  // Secret String for JSON Web Token
+  SECRET,
 };
