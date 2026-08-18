@@ -1,5 +1,5 @@
 import queries from "../../db/queries.ts";
-import { LoginSuccessObject } from "../types/login.ts";
+import type { LoginSuccessObject } from "../types/login.ts";
 import type { UserLoginCredentials } from "../types/user.ts";
 import config from "../utils/config.ts";
 import pwd from "../utils/pwd.ts";

@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { Router } from "express";
 import type { UserLoginCredentials } from "../types/user.ts";
 import loginService from "../service/loginService.ts";
-import { LoginSuccessObject } from "../types/login.ts";
+import type { LoginSuccessObject } from "../types/login.ts";
 
 const loginRouter = Router();
 
