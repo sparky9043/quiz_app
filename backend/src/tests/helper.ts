@@ -1,5 +1,5 @@
 import pool from "../../db/pool.ts";
-import type { NewUser } from "../types/user.ts";
+import type { NewUser, UserNoPassword } from "../types/user.ts";
 import pwd from "../utils/pwd.ts";
 
 const deleteUserTable = async () => {
@@ -33,8 +33,17 @@ const addUserToTable = async (newUser: NewUser) => {
 
 };
 
+const getUsersInDb = async (): Promise<UserNoPassword[]> => {
+  const { rows } = await pool.query(`
+    SELECT id, username, type FROM users;
+  `);
+  
+  return rows;
+};
+
 export default {
   deleteUserTable,
   createUserTable,
   addUserToTable,
+  getUsersInDb,
 }

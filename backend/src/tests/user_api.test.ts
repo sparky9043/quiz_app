@@ -67,14 +67,39 @@ void describe('User Requests', () => {
       type: 'teacher'
     };
 
+    const usersAtStart = await helper.getUsersInDb();
+
     const response = await api
       .post(baseUrl)
       .send(createNewUserRequestBody)
       .expect(201);
+  
+    const usersAtEnd = await helper.getUsersInDb();
     
     const newUser = response.body as User;
     
-      assert.strictEqual(newUser.username, createNewUserRequestBody.username);
+    assert.strictEqual(newUser.username, createNewUserRequestBody.username);
+    assert.strictEqual(usersAtEnd.length, usersAtStart.length + 1);
+  });
+
+  void test('POST request to /api/users returns 409 if duplicate exists', async () => {
+    const duplicateUser = {
+      username: 'default',
+      password: 'password123',
+      type: 'teacher'
+    };
+
+    const usersAtStart = await helper.getUsersInDb();
+
+    await api
+      .post(baseUrl)
+      .send(duplicateUser)
+      .expect(409)
+      .expect('Content-Type', /application\/json/);
+
+    const usersAtEnd = await helper.getUsersInDb();
+    
+    assert.strictEqual(usersAtEnd.length, usersAtStart.length);
   });
 });
 
