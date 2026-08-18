@@ -47,7 +47,7 @@ void describe('Log in Request to /api/login', () => {
     const badUser = {
       username: 'bad_username',
       password: 'password123',
-    }
+    };
 
     await agent
       .post(loginUrl)
