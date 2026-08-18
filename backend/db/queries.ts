@@ -51,7 +51,7 @@ const getUserByUsername = async (username: string): Promise<User> => {
   `, [username]);
 
   if (rows.length != 1) {
-    throw new Error('Username invalid');
+    throw new Error('Username not found');
   }
 
   return rows[0] as User;
