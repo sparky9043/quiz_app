@@ -8,6 +8,13 @@ export class HttpError extends Error {
   }
 }
 
+// Validation Error with status code 400
+export class ValidationError extends HttpError {
+  constructor(message = 'please fill out the form correctly') {
+    super(400, message);
+  }
+}
+
 // Not Found Error with Status Code 404
 export class NotFoundError extends HttpError {
   constructor(message = 'not found') {
