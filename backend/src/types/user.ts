@@ -18,3 +18,8 @@ export interface User extends NewUserPasswordHashed {
 export interface NewUser extends BaseUser {
   password: string;
 };
+
+export interface UserLoginCreds {
+  username: string;
+  password: string;
+};
