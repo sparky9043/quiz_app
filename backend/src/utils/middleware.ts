@@ -1,7 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { DatabaseError } from "pg";
 import { HttpError } from "../errors/http.ts";
-// import { DatabaseError } from "pg";
 
 const getErrorInfoJson = (err: DatabaseError) => {
   return {

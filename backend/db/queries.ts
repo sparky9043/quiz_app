@@ -46,6 +46,7 @@ const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> =>
   return rows[0] as UserNoPassword;
 };
 
+// Search for User in DB and return with password hash
 const getUserByUsername = async (username: string): Promise<User> => {
   const { rows } = await pool.query(`
     SELECT * FROM users WHERE username = $1;

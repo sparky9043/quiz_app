@@ -7,9 +7,11 @@ const app = express();
 
 app.use(express.json());
 
+// Routers
 app.use('/api/login', loginRouter);
 app.use('/api/users', userRouter);
 
+// Error Handler Middlewares
 app.use(middleware.databaseErrorHandler);
 app.use(middleware.httpErrorHandler);
 app.use(middleware.errorHandler);

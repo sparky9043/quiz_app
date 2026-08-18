@@ -20,6 +20,7 @@ const login = async (userLoginCredentals: UserLoginCredentials) => {
     username: savedUser.username,
   };
 
+  // Sign JSON Web Token with user id, username, secret string and expiration time of 1 hour
   const token = jwt.sign(payload, config.SECRET, { expiresIn: 60 * 60 });
 
   return { status: 'success', token };

@@ -27,6 +27,7 @@ const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> =>
 const createNewUser = async (newUserRequestBody: NewUser) => {
   const rawPassword = newUserRequestBody.password;
   
+  // Hash raw password using bcrypt
   const passwordHash = await pwd.hash(rawPassword);
 
   if (!passwordHash) {

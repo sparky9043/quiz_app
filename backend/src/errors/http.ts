@@ -1,3 +1,4 @@
+// Custom Error HTTP Error classes
 export class HttpError extends Error {
   status: number;
 
@@ -7,6 +8,7 @@ export class HttpError extends Error {
   }
 };
 
+// Not Found Error with Status Code 404
 export class NotFoundError extends HttpError {
   constructor(message = 'not found') {
     super(404, message);
