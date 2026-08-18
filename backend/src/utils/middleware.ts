@@ -14,6 +14,10 @@ const getErrorInfoJson = (err: DatabaseError) => {
 };
 
 const databaseErrorHandler = (err: unknown, _req: Request, res: Response, next: NextFunction) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
   if (err instanceof DatabaseError) {
     if (err.code == '23505') {
       res
