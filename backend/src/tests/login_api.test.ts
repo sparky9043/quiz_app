@@ -42,6 +42,18 @@ void describe('Log in Request to /api/login', () => {
 
     assert.strictEqual(successObject.status, 'success');
   });
+
+  void test('Returns 404 if the username does not exist', async () => {
+    const badUser = {
+      username: 'bad_username',
+      password: 'password123',
+    }
+
+    await agent
+      .post(loginUrl)
+      .send(badUser)
+      .expect(404);
+  });
 });
 
 
