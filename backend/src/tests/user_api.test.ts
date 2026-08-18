@@ -1,17 +1,39 @@
 import supertest from 'supertest';
 import app from '../app.ts';
-import { describe, test, after } from 'node:test';
+import { describe, test, after, beforeEach } from 'node:test';
 import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import type { UserNoPassword, User } from '../types/user.ts';
+import helper from './helper.ts';
+import type { NewUser } from '../types/user.ts';
 
 const api = supertest(app);
 
 const baseUrl = '/api/users';
 
+const firstUser = {
+  username: 'default',
+  password: 'password123',
+  type: 'teacher'
+} as NewUser;
+
+const secondUser = {
+  username: 'second',
+  password: 'password123',
+  type: 'student',
+} as NewUser;
+
+
+beforeEach(async () => {
+  await helper.deleteUserTable();
+  await helper.createUserTable();
+  await helper.addUserToTable(firstUser);
+  await helper.addUserToTable(secondUser);
+});
+
 void describe('User Requests', () => {
   void test('GET users to /api/users returns all users', async () => {
-    const testUsername = 'test';
+    const testUsername = 'default';
 
     const response = await api
       .get(baseUrl)
@@ -25,9 +47,9 @@ void describe('User Requests', () => {
   });
 
   void test('GET request /api/users/:id returns one user', async () => {
-    const userId = 4;
+    const userId = 1;
 
-    const testUsername = 'test';
+    const testUsername = 'default';
 
     const response = await api
       .get(`${baseUrl}/${userId}`)
