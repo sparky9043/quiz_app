@@ -38,7 +38,7 @@ const getUsersInDb = async (): Promise<UserNoPassword[]> => {
     SELECT id, username, type FROM users;
   `);
   
-  return rows;
+  return rows as UserNoPassword[];
 };
 
 export default {
@@ -46,4 +46,4 @@ export default {
   createUserTable,
   addUserToTable,
   getUsersInDb,
-}
+};

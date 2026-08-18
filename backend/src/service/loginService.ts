@@ -18,7 +18,7 @@ const login = async (userLoginCredentals: UserLoginCredentials) => {
   const payload = {
     id: savedUser.id,
     username: savedUser.username,
-  }
+  };
 
   const token = jwt.sign(payload, config.SECRET, { expiresIn: 60 * 60 });
 

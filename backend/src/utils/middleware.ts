@@ -11,7 +11,7 @@ const getErrorInfoJson = (err: DatabaseError) => {
     errors: {
       detail: err.detail,
     },
-  }
+  };
 };
 
 const databaseErrorHandler = (err: unknown, _req: Request, res: Response, next: NextFunction) => {
