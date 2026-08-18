@@ -1,6 +1,20 @@
 import type { NextFunction, Request, Response } from "express";
 import { DatabaseError } from "pg";
-import { HttpError } from "../errors/http.ts";
+import { HttpError, ValidationError } from "../errors/http.ts";
+
+const tokenExtractor = (req: Request, _res: Response, next: NextFunction) => {
+  const tokenBearer = req.get('authorization');
+
+  if (!tokenBearer || !tokenBearer.startsWith("Bearer ")) {
+    throw new ValidationError('Please provide the correct format for your token');
+  }
+
+  const extractedToken = tokenBearer.replace('Bearer ', '');
+
+  req.headers['authorization'] = extractedToken;
+
+  next();
+};
 
 const getErrorInfoJson = (err: DatabaseError) => {
   return {
@@ -51,6 +65,7 @@ const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFun
 };
 
 export default {
+  tokenExtractor,
   databaseErrorHandler,
   httpErrorHandler,
   errorHandler,
