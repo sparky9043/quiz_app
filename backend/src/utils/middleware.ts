@@ -43,6 +43,8 @@ const httpErrorHandler = (err: unknown, _req: Request, res: Response, next: Next
 
 const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.log('inside errorHandler');
+  console.error('An unexpected error occurred:', err);
+
   if (err instanceof Error) {
     res.status(500).json({ error: err.message });
   }
