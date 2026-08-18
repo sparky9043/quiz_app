@@ -24,7 +24,7 @@ const LOCAL_DB = process.env.LOCAL_DB;
 
 const LOCAL_PASSWORD = process.env.LOCAL_PASSWORD;
 
-const SECRET = process.env.SECRET;
+const SECRET = String(process.env.SECRET);
 
 export default {
   SERVER_PORT,
