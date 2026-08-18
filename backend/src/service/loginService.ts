@@ -1,4 +1,5 @@
 import queries from "../../db/queries.ts";
+import { UnauthorizedError } from "../errors/http.ts";
 import type { LoginSuccessObject } from "../types/login.ts";
 import type { UserLoginCredentials } from "../types/user.ts";
 import jwt from "../utils/jwt.ts";
@@ -12,7 +13,7 @@ const login = async (userLoginCredentals: UserLoginCredentials): Promise<LoginSu
   const isPasswordCorrect = await pwd.compare(password, savedUser.password_hash);
 
   if (!isPasswordCorrect) {
-    throw new Error('incorrect password');
+    throw new UnauthorizedError('incorrect password');
   }
 
   // Sign JSON Web Token with user id, username, secret string and expiration time in minutes

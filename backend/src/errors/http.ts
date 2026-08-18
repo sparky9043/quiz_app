@@ -6,11 +6,18 @@ export class HttpError extends Error {
     super(message);
     this.status = status;
   }
-};
+}
 
 // Not Found Error with Status Code 404
 export class NotFoundError extends HttpError {
   constructor(message = 'not found') {
     super(404, message);
+  }
+}
+
+// Unauthorized Error with Status Code 401
+export class UnauthorizedError extends HttpError {
+  constructor(message = 'Unauthorized Action') {
+    super(401, message);
   }
 }
