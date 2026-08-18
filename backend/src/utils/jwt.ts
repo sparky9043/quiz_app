@@ -6,11 +6,11 @@ const signToken = (userId: number, username: string, tokenExpirationMinutes: num
   const payload = {
     id: userId,
     username,
-  }
+  };
 
   return jsonwebtoken.sign(payload, config.SECRET, { expiresIn: 60 * tokenExpirationMinutes });
-}
+};
 
 export default {
   signToken,
-}
+};
