@@ -19,7 +19,7 @@ export interface NewUser extends BaseUser {
   password: string;
 };
 
-export interface UserLoginCreds {
+export interface UserLoginCredentials {
   username: string;
   password: string;
 };
