@@ -45,6 +45,18 @@ const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> =>
   return rows[0] as UserNoPassword;
 };
 
+const getUserByUsername = async (username: string): Promise<User> => {
+  const { rows } = await pool.query(`
+    SELECT * FROM users WHERE username = $1;
+  `, [username]);
+
+  if (rows.length != 1) {
+    throw new Error('Username invalid');
+  }
+
+  return rows[0] as User;
+};
+
 // Create One User and return with password
 const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Promise<User> => {
   const username = newUserPasswordHashed.username;
@@ -69,5 +81,6 @@ export default {
   getUsersNoPassword,
   getUserById,
   getUserByIdNoPassword,
+  getUserByUsername,
   createNewUser,
 };
