@@ -1,5 +1,5 @@
 import pool from "../../db/pool.ts";
-import type { NewUser, UserNoPassword } from "../types/user.ts";
+import type { NewUser, UserLoginCredentials, UserNoPassword } from "../types/user.ts";
 import pwd from "../utils/pwd.ts";
 
 const deleteUserTable = async () => {
@@ -41,9 +41,15 @@ const getUsersInDb = async (): Promise<UserNoPassword[]> => {
   return rows as UserNoPassword[];
 };
 
+const defaultUserCredentials = {
+  username: 'default',
+  password: 'password123',
+} as UserLoginCredentials;
+
 export default {
   deleteUserTable,
   createUserTable,
   addUserToTable,
   getUsersInDb,
+  defaultUserCredentials,
 };
