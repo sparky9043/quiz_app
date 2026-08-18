@@ -7,7 +7,7 @@ on:
 
 jobs:
     ci:
-        runs-on: ubunt-latest
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
             - uses: actions/setup-node@v6
