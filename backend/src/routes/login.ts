@@ -1,0 +1,12 @@
+import { NextFunction, Request, Response, Router } from "express";
+
+const loginRouter = Router();
+
+loginRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    console.log(req, res);
+    res.status(201).json({ status: 'success' });
+  } catch (error) {
+    next(error);
+  }
+});
