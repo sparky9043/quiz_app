@@ -8,6 +8,7 @@ app.use(express.json());
 
 app.use('/api/users', usersRouter);
 
+app.use(middleware.databaseErrorHandler);
 app.use(middleware.errorHandler);
 
 export default app;
