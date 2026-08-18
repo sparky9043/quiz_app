@@ -1,14 +1,15 @@
 import { describe, test, after, beforeEach } from 'node:test';
 import assert from 'node:assert';
 import pool from '../../db/pool.ts';
-// import app from '../app.ts';
-// import supertest from 'supertest';
+import app from '../app.ts';
+import supertest from 'supertest';
 import helper from './helper.ts';
-import type { NewUser } from '../types/user.ts';
-// const loginUrl = '/api/login';
+import type { NewUser, UserLoginCredentials } from '../types/user.ts';
+
+const loginUrl = '/api/login';
 // const userUrl = '/api/users';
 
-// const agent = supertest.agent(app);
+const agent = supertest.agent(app);
 
 const firstUser = {
   username: 'default',
@@ -30,8 +31,28 @@ beforeEach(async () => {
 });
 
 
-void describe('Truthy statement', () => {
-  void test('true equals true', () => {
+void describe('Login', async () => {
+  const defaultUserCredentials = {
+    username: 'default',
+    password: 'password123',
+  } as UserLoginCredentials;
+
+  const response = await agent
+    .post(loginUrl)
+    .send(defaultUserCredentials)
+    .expect(201);
+
+  void test('true equals true', async () => {
+
+
+    console.log(response.body);
+
+    assert.strictEqual(true, true);
+  });
+
+  void test('test to see if login persists', async () => {
+    console.log(response.body);
+
     assert.strictEqual(true, true);
   });
 });
