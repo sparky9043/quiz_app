@@ -1,3 +1,4 @@
+import { NotFoundError } from "../src/errors/http.ts";
 import type { NewUserPasswordHashed, User, UserNoPassword } from "../src/types/user.ts";
 import pool from "./pool.ts";
 
@@ -51,7 +52,7 @@ const getUserByUsername = async (username: string): Promise<User> => {
   `, [username]);
 
   if (rows.length != 1) {
-    throw new Error('Username not found');
+    throw new NotFoundError('Username not found');
   }
 
   return rows[0] as User;
