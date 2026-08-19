@@ -16,7 +16,7 @@ loginRouter.post('/', async (req: Request<unknown, unknown, UserLoginCredentials
 
     const response = await loginService.login(userLoginCredentals);
 
-    res.status(201).json(response);
+    res.status(200).json(response);
   } catch (error) {
     next(error);
   }
