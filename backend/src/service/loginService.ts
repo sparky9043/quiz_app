@@ -19,7 +19,14 @@ const login = async (userLoginCredentals: UserLoginCredentials): Promise<LoginSu
   // Sign JSON Web Token with saved user info and expiration time in minutes
   const token = jwt.signToken(savedUser, 60);
 
-  return { status: 'success', token };
+  const loginSuccessObject = {
+    token,
+    id: savedUser.id,
+    type: savedUser.type,
+    username: savedUser.username,
+  };
+
+  return loginSuccessObject;
 };
 
 export default { login };

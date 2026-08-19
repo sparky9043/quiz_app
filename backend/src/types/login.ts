@@ -1,4 +1,6 @@
 export interface LoginSuccessObject {
-  status: string;
   token: string;
+  id: number;
+  username: string;
+  type: string;
 }

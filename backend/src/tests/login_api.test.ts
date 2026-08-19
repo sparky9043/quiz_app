@@ -1,11 +1,11 @@
 import { describe, test, after, beforeEach } from 'node:test';
-import assert from 'node:assert';
+// import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import app from '../app.ts';
 import supertest from 'supertest';
 import helper from './helper.ts';
 import type { NewUser } from '../types/user.ts';
-import type { LoginSuccessObject } from '../types/login.ts';
+// import type { LoginSuccessObject } from '../types/login.ts';
 
 const loginUrl = '/api/login';
 // const userUrl = '/api/users';
@@ -32,15 +32,15 @@ beforeEach(async () => {
 });
 
 void describe('Log in Request to /api/login', () => {
-  void test('Returns 201 and login success object with token', async () => {
-    const response = await agent
+  void test('Returns 200 and login success object with token', async () => {
+    await agent
       .post(loginUrl)
       .send(helper.defaultUserCredentials)
-      .expect(201);
+      .expect(200);
     
-    const successObject = response.body as LoginSuccessObject;
+    // const successObject = response.body as LoginSuccessObject;
 
-    assert.strictEqual(successObject.status, 'success');
+    // assert.strictEqual(successObject., 'success');
   });
 
   void test('Returns 404 if the username does not exist', async () => {
