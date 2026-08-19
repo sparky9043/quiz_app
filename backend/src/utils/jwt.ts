@@ -15,6 +15,17 @@ const signToken = (savedUser: User, tokenExpirationMinutes: number): string => {
   return jsonwebtoken.sign(payload, config.SECRET, { expiresIn: 60 * tokenExpirationMinutes });
 };
 
+const verifyToken = (rawToken: string, secretString: string) => {
+  const payload = jsonwebtoken.verify(rawToken, secretString);
+
+  if (!payload) {
+    throw new Error('token invalid');
+  }
+
+  return payload;
+};
+
 export default {
   signToken,
+  verifyToken,
 };
