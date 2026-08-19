@@ -21,7 +21,7 @@ const student2 = {
   password: 'password123',
   type: 'student',
   teacher_id: 1,
-} as NewUser
+} as NewUser;
 
 const newUsers = [
   teacher,
