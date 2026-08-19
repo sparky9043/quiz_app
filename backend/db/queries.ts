@@ -85,7 +85,7 @@ const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Prom
 // Get all Quizzes (No Authorization)
 const getAllQuizzes = async (): Promise<Quiz[]> => {
   const { rows } = await pool.query<Quiz>(`
-    SELECT id, user_id, title, timestamp FROM quizzes;
+    SELECT id, teacher_id, title, timestamp FROM quizzes;
   `);
 
   return rows;
@@ -95,7 +95,7 @@ const getAllQuizzes = async (): Promise<Quiz[]> => {
 const getAllQuizzesByTeacher = async (successObject: LoginSuccessObject): Promise<Quiz[]> => {
   if (successObject.type === 'teacher') {
     const { rows } = await pool.query<Quiz>(`
-      SELECT id, user_id, title, timestamp FROM quizzes WHERE user_id = $1;
+      SELECT id, teacher_id, title, timestamp FROM quizzes WHERE teacher_id = $1;
     `, [successObject.id]);
     return rows;
   } else {
