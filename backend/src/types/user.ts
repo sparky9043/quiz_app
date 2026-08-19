@@ -5,6 +5,7 @@ export interface BaseUser {
 
 export interface UserNoPassword extends BaseUser {
   id: number;
+  teacher_id?: number;
 }
 
 export interface NewUserPasswordHashed extends BaseUser {
@@ -14,6 +15,7 @@ export interface NewUserPasswordHashed extends BaseUser {
 export interface User extends NewUserPasswordHashed {
   id: number;
   password_hash: string;
+  teacher_id?: number;
 }
 
 export interface NewUser extends BaseUser {
