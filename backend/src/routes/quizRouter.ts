@@ -13,13 +13,12 @@ quizRouter.get('/', middleware.tokenExtractor, (req: Request, res: Response, nex
     const token = req.get('authorization');
 
     if (!token) {
-      throw new Error('no token found');
+      throw new Error('no token found in the request header');
     }
 
-    jwt.verifyToken(token, config.SECRET);
-    
+    const payload = jwt.verifyToken(token, config.SECRET);
 
-    res.status(200).send('something');
+    res.status(200).json(payload);
   } catch (error) {
     next(error);
   }
