@@ -38,6 +38,7 @@ const createNewUser = async (newUserRequestBody: NewUser) => {
     username: newUserRequestBody.username,
     type: newUserRequestBody.type,
     password_hash: passwordHash,
+    teacher_id: newUserRequestBody.teacher_id,
   };
 
   const newUser = await queries.createNewUser(newUserPasswordHashed);

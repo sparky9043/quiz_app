@@ -4,6 +4,7 @@ import config from "../utils/config.ts";
 import pwd from "../utils/pwd.ts";
 
 const resetDbTables = async () => {
+  // Delete all data from users and quizzes tables
   await pool.query(`
     TRUNCATE TABLE users, quizzes RESTART IDENTITY CASCADE;
   `);
@@ -11,16 +12,15 @@ const resetDbTables = async () => {
 
 const addUserToTable = async (newUser: NewUser) => {
   const passwordHash = await pwd.hash(newUser.password);
-
   await pool.query(`
-    INSERT INTO users (username, password_hash, type)
-    VALUES ($1, $2, $3);
+    INSERT INTO users (username, password_hash, type, teacher_id)
+    VALUES ($1, $2, $3, $4);
   `, [
     newUser.username,
     passwordHash,
     newUser.type,
+    newUser.teacher_id ?? null,
   ]);
-
 };
 
 const getUsersInDb = async (): Promise<UserNoPassword[]> => {
