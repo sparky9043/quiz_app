@@ -16,8 +16,8 @@ const login = async (userLoginCredentals: UserLoginCredentials): Promise<LoginSu
     throw new UnauthorizedError('incorrect password');
   }
 
-  // Sign JSON Web Token with user id, username, secret string and expiration time in minutes
-  const token = jwt.signToken(savedUser.id, savedUser.username, 60);
+  // Sign JSON Web Token with saved user info and expiration time in minutes
+  const token = jwt.signToken(savedUser, 60);
 
   return { status: 'success', token };
 };

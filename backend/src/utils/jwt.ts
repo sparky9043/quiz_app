@@ -1,11 +1,15 @@
 import jsonwebtoken from 'jsonwebtoken';
 import config from './config.ts';
+import type { User } from '../types/user.ts';
 
 // Sign Token using userId and username as payload and provide token expiration time in minutes
-const signToken = (userId: number, username: string, tokenExpirationMinutes: number): string => {
+const signToken = (savedUser: User, tokenExpirationMinutes: number): string => {
+  const { id, username, type } = savedUser;
+
   const payload = {
-    id: userId,
+    id,
     username,
+    type,
   };
 
   return jsonwebtoken.sign(payload, config.SECRET, { expiresIn: 60 * tokenExpirationMinutes });
