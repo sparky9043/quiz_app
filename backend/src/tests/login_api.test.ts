@@ -3,16 +3,14 @@ import pool from '../../db/pool.ts';
 import app from '../app.ts';
 import supertest from 'supertest';
 import helper from './helper.ts';
+import seed from './seed.ts';
 
 const loginUrl = '/api/login';
 
 const agent = supertest.agent(app);
 
 beforeEach(async () => {
-  await helper.resetDbTables();
-  for (const user of helper.newUsers) {
-    await helper.addUserToTable(user);
-  }
+  await seed();
 });
 
 void describe('Log in Request to /api/login', () => {

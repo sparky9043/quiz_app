@@ -5,21 +5,19 @@ import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import type { UserNoPassword, User } from '../types/user.ts';
 import helper from './helper.ts';
+import seed from './seed.ts';
 
 const api = supertest(app);
 
 const baseUrl = '/api/users';
 
 beforeEach(async () => {
-  await helper.resetDbTables();
-  for (const user of helper.newUsers) {
-    await helper.addUserToTable(user);
-  }
+  await seed();
 });
 
 void describe('User Requests', () => {
   void test('GET users to /api/users returns all users', async () => {
-    const testUsername = 'default';
+    const testUsername = 'ms_rivera';
 
     const response = await api
       .get(baseUrl)
@@ -35,7 +33,7 @@ void describe('User Requests', () => {
   void test('GET request /api/users/:id returns one user', async () => {
     const userId = 1;
 
-    const testUsername = 'default';
+    const testUsername = 'ms_rivera';
 
     const response = await api
       .get(`${baseUrl}/${userId}`)
@@ -70,7 +68,7 @@ void describe('User Requests', () => {
 
   void test('POST request to /api/users returns 409 if duplicate exists', async () => {
     const duplicateUser = {
-      username: 'default',
+      username: 'ms_rivera',
       password: 'password123',
       type: 'teacher'
     };
