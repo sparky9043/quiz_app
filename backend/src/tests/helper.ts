@@ -58,7 +58,7 @@ const getUsersInDb = async (): Promise<UserNoPassword[]> => {
 };
 
 const defaultUserCredentials = {
-  username: 'default',
+  username: 'ms_rivera',
   password: 'password123',
 };
 

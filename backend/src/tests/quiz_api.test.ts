@@ -5,6 +5,7 @@ import app from '../app.ts';
 import supertest from 'supertest';
 import helper from './helper.ts';
 import type { LoginSuccessObject } from '../types/login.ts';
+import seed from './seed.ts';
 
 const loginUrl = '/api/login';
 const quizUrl = '/api/quizzes';
@@ -12,10 +13,7 @@ const quizUrl = '/api/quizzes';
 const agent = supertest.agent(app);
 
 beforeEach(async () => {
-  await helper.resetDbTables();
-  for (const user of helper.newUsers) {
-    await helper.addUserToTable(user);
-  }
+  await seed();
 });
 
 void describe('After Logging in and accessing /api/quizzes', async () => {
