@@ -65,12 +65,13 @@ const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Prom
   const username = newUserPasswordHashed.username;
   const passwordHash = newUserPasswordHashed.password_hash;
   const type = newUserPasswordHashed.type;
+  const teacherId = newUserPasswordHashed.teacher_id;
 
   const { rows } = await pool.query<User>(`
-    INSERT INTO users (username, password_hash, type)
-    VALUES ($1, $2, $3)
+    INSERT INTO users (username, password_hash, type, teacher_id)
+    VALUES ($1, $2, $3, $4)
     RETURNING *;
-  `, [username, passwordHash, type]);
+  `, [username, passwordHash, type, teacherId]);
 
   if (rows.length != 1) {
     throw new Error('Internal Server Error: could not create new user');
