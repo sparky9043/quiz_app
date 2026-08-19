@@ -19,6 +19,7 @@ const secondUser = {
   username: 'second',
   password: 'password123',
   type: 'student',
+  teacher_id: 1,
 } as NewUser;
 
 beforeEach(async () => {
