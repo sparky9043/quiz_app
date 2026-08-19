@@ -70,7 +70,6 @@ const tokenErrorHandler = (err: unknown, _req: Request, res: Response, next: Nex
   console.log('inside tokenErrorHandler');
   if (err instanceof JsonWebTokenError) {
     let status = 500;
-    console.log('error reached', err);
     if (err.message.includes("invalid token")) {
       status = 400;
     } else if (err.message.includes("jwt expired")) {
@@ -80,7 +79,7 @@ const tokenErrorHandler = (err: unknown, _req: Request, res: Response, next: Nex
     res
       .status(status)
       .json({ status, message: err.message });
-      
+
   } else {
     next(err);
   }
