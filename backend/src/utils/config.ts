@@ -26,6 +26,8 @@ const LOCAL_PASSWORD = process.env.LOCAL_PASSWORD;
 
 const SECRET = String(process.env.SECRET);
 
+const EXPIRED_TOKEN = String(process.env.EXPIRED_TOKEN);
+
 export default {
   SERVER_PORT,
   // Supabase
@@ -40,4 +42,6 @@ export default {
   LOCAL_PASSWORD,
   // Secret String for JSON Web Token
   SECRET,
+  // Expired Token for testing JWT
+  EXPIRED_TOKEN,
 };

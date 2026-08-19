@@ -1,5 +1,6 @@
 import pool from "../../db/pool.ts";
 import type { NewUser, UserNoPassword } from "../types/user.ts";
+import config from "../utils/config.ts";
 import pwd from "../utils/pwd.ts";
 
 const deleteUserTable = async () => {
@@ -46,10 +47,13 @@ const defaultUserCredentials = {
   password: 'password123',
 };
 
+const expiredToken = config.EXPIRED_TOKEN;
+
 export default {
   deleteUserTable,
   createUserTable,
   addUserToTable,
   getUsersInDb,
   defaultUserCredentials,
+  expiredToken,
 };
