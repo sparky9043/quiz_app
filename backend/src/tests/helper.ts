@@ -32,7 +32,7 @@ const newUsers = [
 const resetDbTables = async () => {
   // Delete all data from users and quizzes tables
   await pool.query(`
-    TRUNCATE TABLE users, quizzes RESTART IDENTITY CASCADE;
+    TRUNCATE TABLE users, quizzes, questions, options RESTART IDENTITY CASCADE;
   `);
 };
 
