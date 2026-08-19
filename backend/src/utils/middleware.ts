@@ -7,7 +7,7 @@ const tokenExtractor = (req: Request, _res: Response, next: NextFunction) => {
   const tokenBearer = req.get('authorization');
 
   if (!tokenBearer || !tokenBearer.startsWith("Bearer ")) {
-    throw new ValidationError('Please provide the correct format for your token');
+    throw new ValidationError('Token invalid or missing Bearer in the header');
   }
 
   const extractedToken = tokenBearer.replace('Bearer ', '');
