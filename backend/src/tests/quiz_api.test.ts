@@ -38,36 +38,6 @@ void describe('After Logging in and accessing /api/quizzes', async () => {
   });
 });
 
-// void describe('Bad Tokens', () => {
-//   void test('returns status 401 if token is expired', async () => {
-//     const tokenBearer = 'Bearer ' + helper.expiredToken;
-
-//     const response = await agent
-//       .get(quizUrl)
-//       .set('Authorization', tokenBearer)
-//       .expect(401)
-//       .expect('Content-Type', /application\/json/);
-
-//     const errorObject = response.body as HttpErrorDetails;
-
-//     assert(errorObject.message.includes('expired'));
-//   });
-
-//   void test('returns status 400 if token is invalid or malformed', async () => {
-//     const badToken = 'really-bad-token';
-
-//     const respones = await agent
-//       .get(quizUrl)
-//       .set('Authorization', badToken)
-//       .expect(400)
-//       .expect('Content-Type', /application\/json/);
-
-//     const errorObject = respones.body as HttpErrorDetails;
-
-//     assert(errorObject.message.includes('invalid'));
-//   });
-// });
-
 after(async () => {
   await pool.end();
 });
