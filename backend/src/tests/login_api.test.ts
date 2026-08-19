@@ -22,8 +22,8 @@ const secondUser = {
 } as NewUser;
 
 beforeEach(async () => {
-  await helper.deleteUserTable();
-  await helper.createUserTable();
+  await helper.resetDbTables();
+  // await helper.createUserTable();
   await helper.addUserToTable(firstUser);
   await helper.addUserToTable(secondUser);
 });
