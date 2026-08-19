@@ -32,7 +32,7 @@ beforeEach(async () => {
   await helper.addUserToTable(secondUser);
 });
 
-void describe('After Logging in', async () => {
+void describe('After Logging in and accessing /api/quizzes', async () => {
   const response = await agent
     .post(loginUrl)
     .send(helper.defaultUserCredentials)
@@ -42,7 +42,7 @@ void describe('After Logging in', async () => {
 
   const tokenBearer = "Bearer " + successObject.token;
 
-  void test('true equals true', async () => {
+  void test('Returns all quizzes by user', async () => {
     const response = await agent
       .get(quizUrl)
       .set('Authorization', tokenBearer)
