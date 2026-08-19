@@ -1,5 +1,4 @@
 import queries from "../../db/queries.ts";
-import type { LoginSuccessObject } from "../types/login.ts";
 
 const getAllQuizzes = async () => {
   const quizzes = await queries.getAllQuizzes();
@@ -7,13 +6,13 @@ const getAllQuizzes = async () => {
   return quizzes;
 };
 
-const getAllQuizzesByTeacher = async (successObject: LoginSuccessObject) => {
-  const quizzesByTeacher = await queries.getAllQuizzesByTeacher(successObject);
+const getAllQuizzesByTeacherId = async (teacherId: number) => {
+  const quizzesByTeacher = await queries.getAllQuizzesByTeacherId(teacherId);
 
   return quizzesByTeacher;
 };
 
 export default {
   getAllQuizzes,
-  getAllQuizzesByTeacher,
+  getAllQuizzesByTeacherId,
 };
