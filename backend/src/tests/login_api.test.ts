@@ -3,30 +3,16 @@ import pool from '../../db/pool.ts';
 import app from '../app.ts';
 import supertest from 'supertest';
 import helper from './helper.ts';
-import type { NewUser } from '../types/user.ts';
 
 const loginUrl = '/api/login';
 
 const agent = supertest.agent(app);
 
-const firstUser = {
-  username: 'default',
-  password: 'password123',
-  type: 'teacher'
-} as NewUser;
-
-const secondUser = {
-  username: 'second',
-  password: 'password123',
-  type: 'student',
-  teacher_id: 1,
-} as NewUser;
-
 beforeEach(async () => {
   await helper.resetDbTables();
-  // await helper.createUserTable();
-  await helper.addUserToTable(firstUser);
-  await helper.addUserToTable(secondUser);
+  for (const user of helper.newUsers) {
+    await helper.addUserToTable(user);
+  }
 });
 
 void describe('Log in Request to /api/login', () => {

@@ -3,6 +3,32 @@ import type { NewUser, UserNoPassword } from "../types/user.ts";
 import config from "../utils/config.ts";
 import pwd from "../utils/pwd.ts";
 
+const teacher = {
+  username: 'default',
+  password: 'password123',
+  type: 'teacher'
+} as NewUser;
+
+const student1 = {
+  username: 'second',
+  password: 'password123',
+  type: 'student',
+  teacher_id: 1,
+} as NewUser;
+
+const student2 = {
+  username: 'third',
+  password: 'password123',
+  type: 'student',
+  teacher_id: 1,
+} as NewUser
+
+const newUsers = [
+  teacher,
+  student1,
+  student2,
+];
+
 const resetDbTables = async () => {
   // Delete all data from users and quizzes tables
   await pool.query(`
@@ -44,4 +70,5 @@ export default {
   getUsersInDb,
   defaultUserCredentials,
   expiredToken,
+  newUsers,
 };

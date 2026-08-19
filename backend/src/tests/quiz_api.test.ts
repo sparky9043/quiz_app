@@ -1,36 +1,22 @@
-import { describe, test, after } from 'node:test';
+import { describe, test, after, beforeEach } from 'node:test';
 import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import app from '../app.ts';
 import supertest from 'supertest';
 import helper from './helper.ts';
-// import type { NewUser } from '../types/user.ts';
 import type { LoginSuccessObject } from '../types/login.ts';
-// import type { HttpErrorDetails } from '../types/status.ts';
 
 const loginUrl = '/api/login';
 const quizUrl = '/api/quizzes';
 
 const agent = supertest.agent(app);
 
-// const firstUser = {
-//   username: 'default',
-//   password: 'password123',
-//   type: 'teacher'
-// } as NewUser;
-
-// const secondUser = {
-//   username: 'second',
-//   password: 'password123',
-//   type: 'student',
-// } as NewUser;
-
-// beforeEach(async () => {
-//   await helper.deleteUserTable();
-//   await helper.createUserTable();
-//   await helper.addUserToTable(firstUser);
-//   await helper.addUserToTable(secondUser);
-// });
+beforeEach(async () => {
+  await helper.resetDbTables();
+  for (const user of helper.newUsers) {
+    await helper.addUserToTable(user);
+  }
+});
 
 void describe('After Logging in and accessing /api/quizzes', async () => {
   const response = await agent

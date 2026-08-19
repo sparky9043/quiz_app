@@ -5,30 +5,16 @@ import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import type { UserNoPassword, User } from '../types/user.ts';
 import helper from './helper.ts';
-import type { NewUser } from '../types/user.ts';
 
 const api = supertest(app);
 
 const baseUrl = '/api/users';
 
-const firstUser = {
-  username: 'default',
-  password: 'password123',
-  type: 'teacher'
-} as NewUser;
-
-const secondUser = {
-  username: 'second',
-  password: 'password123',
-  type: 'student',
-  teacher_id: 1,
-} as NewUser;
-
-
 beforeEach(async () => {
   await helper.resetDbTables();
-  await helper.addUserToTable(firstUser);
-  await helper.addUserToTable(secondUser);
+  for (const user of helper.newUsers) {
+    await helper.addUserToTable(user);
+  }
 });
 
 void describe('User Requests', () => {
