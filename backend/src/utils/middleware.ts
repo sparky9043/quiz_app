@@ -2,6 +2,9 @@ import type { NextFunction, Request, Response } from "express";
 import { DatabaseError } from "pg";
 import { HttpError, ValidationError } from "../errors/http.ts";
 import type { DatabaseErrorDetails, HttpErrorDetails } from "../types/status.ts";
+import jsonwebtoken from 'jsonwebtoken';
+
+const { JsonWebTokenError } = jsonwebtoken;
 
 const tokenExtractor = (req: Request, _res: Response, next: NextFunction) => {
   const tokenBearer = req.get('authorization');
@@ -63,6 +66,26 @@ const httpErrorHandler = (err: unknown, _req: Request, res: Response, next: Next
   }
 };
 
+const tokenErrorHandler = (err: unknown, _req: Request, res: Response, next: NextFunction) => {
+  console.log('inside tokenErrorHandler');
+  if (err instanceof JsonWebTokenError) {
+    let status = 500;
+    console.log('error reached', err);
+    if (err.message.includes("invalid token")) {
+      status = 400;
+    } else if (err.message.includes("jwt expired")) {
+      status = 401;
+    }
+
+    res
+      .status(status)
+      .json({ status, message: err.message });
+      
+  } else {
+    next(err);
+  }
+};
+
 const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.log('inside errorHandler');
   console.error('An unexpected error occurred:', err);
@@ -76,5 +99,6 @@ export default {
   tokenExtractor,
   databaseErrorHandler,
   httpErrorHandler,
+  tokenErrorHandler,
   errorHandler,
 };
