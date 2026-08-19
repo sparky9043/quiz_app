@@ -43,10 +43,12 @@ void describe('After Logging in', async () => {
   const tokenBearer = "Bearer " + successObject.token;
 
   void test('true equals true', async () => {
-    await agent
+    const response = await agent
       .get(quizUrl)
       .set('Authorization', tokenBearer)
       .expect(200);
+
+    console.log(response.body);
 
     assert.strictEqual(true, true);
   });
