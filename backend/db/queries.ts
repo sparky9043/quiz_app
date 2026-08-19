@@ -16,7 +16,7 @@ const getUsers = async (): Promise<User[]> => {
 // Returns Users list with no password hash
 const getUsersNoPassword = async (): Promise<UserNoPassword[]> => {
   const { rows } = await pool.query<UserNoPassword>(`
-    SELECT id, username, type FROM users;
+    SELECT id, username, type, teacher_id FROM users;
   `);
 
   return rows;
@@ -25,7 +25,7 @@ const getUsersNoPassword = async (): Promise<UserNoPassword[]> => {
 // Return One User with password hash
 const getUserById = async (userId: number): Promise<User> => {
   const { rows } = await pool.query<User>(`
-    SELECT id, username, type, password_hash FROM users WHERE id = $1;
+    SELECT * FROM users WHERE id = $1;
   `, [userId]);
 
   if (rows.length != 1) {
@@ -38,7 +38,7 @@ const getUserById = async (userId: number): Promise<User> => {
 // Return One User with No Password Hash
 const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> => {
   const { rows } = await pool.query<UserNoPassword>(`
-    SELECT id, username, type FROM users WHERE id = $1;
+    SELECT id, username, type, teacher_id FROM users WHERE id = $1;
   `, [userId]);
 
   if (rows.length != 1) {
@@ -51,7 +51,7 @@ const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> =>
 // Search for User in DB and return with password hash
 const getUserByUsername = async (username: string): Promise<User> => {
   const { rows } = await pool.query<User>(`
-    SELECT id, username, type, password_hash FROM users WHERE username = $1;
+    SELECT * FROM users WHERE username = $1;
   `, [username]);
 
   if (rows.length != 1) {
@@ -85,7 +85,7 @@ const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Prom
 // Get all Quizzes (No Authorization)
 const getAllQuizzes = async (): Promise<Quiz[]> => {
   const { rows } = await pool.query<Quiz>(`
-    SELECT id, teacher_id, title, timestamp FROM quizzes;
+    SELECT * FROM quizzes;
   `);
 
   return rows;
@@ -95,7 +95,7 @@ const getAllQuizzes = async (): Promise<Quiz[]> => {
 const getAllQuizzesByTeacher = async (successObject: LoginSuccessObject): Promise<Quiz[]> => {
   if (successObject.type === 'teacher') {
     const { rows } = await pool.query<Quiz>(`
-      SELECT id, teacher_id, title, timestamp FROM quizzes WHERE teacher_id = $1;
+      SELECT * FROM quizzes WHERE teacher_id = $1;
     `, [successObject.id]);
     return rows;
   } else {
