@@ -24,7 +24,11 @@ const login = async (userLoginCredentals: UserLoginCredentials): Promise<LoginSu
     id: savedUser.id,
     type: savedUser.type,
     username: savedUser.username,
-  };
+  } as LoginSuccessObject;
+
+  if (savedUser.teacher_id) {
+    loginSuccessObject.teacher_id = savedUser.teacher_id;
+  }
 
   return loginSuccessObject;
 };

@@ -3,4 +3,5 @@ export interface LoginSuccessObject {
   id: number;
   username: string;
   type: string;
+  teacher_id?: number;
 }
