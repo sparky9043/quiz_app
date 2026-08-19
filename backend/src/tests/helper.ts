@@ -3,7 +3,7 @@ import type { NewUser, UserNoPassword } from "../types/user.ts";
 import config from "../utils/config.ts";
 import pwd from "../utils/pwd.ts";
 
-const deleteUserTable = async () => {
+const resetDbTables = async () => {
   await pool.query(`
     TRUNCATE TABLE users, quizzes RESTART IDENTITY CASCADE;
   `);
@@ -39,8 +39,7 @@ const defaultUserCredentials = {
 const expiredToken = config.EXPIRED_TOKEN;
 
 export default {
-  deleteUserTable,
-  // createUserTable,
+  resetDbTables,
   addUserToTable,
   getUsersInDb,
   defaultUserCredentials,
