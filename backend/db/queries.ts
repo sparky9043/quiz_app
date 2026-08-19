@@ -1,42 +1,43 @@
 import { NotFoundError } from "../src/errors/http.ts";
 import type { LoginSuccessObject } from "../src/types/login.ts";
+import type { Quiz } from "../src/types/quiz.ts";
 import type { NewUserPasswordHashed, User, UserNoPassword } from "../src/types/user.ts";
 import pool from "./pool.ts";
 
 // Returns Users list with password hash
 const getUsers = async (): Promise<User[]> => {
-  const { rows } = await pool.query(`
+  const { rows } = await pool.query<User>(`
     SELECT * FROM users;
   `);
 
-  return rows as User[];
+  return rows;
 };
 
 // Returns Users list with no password hash
 const getUsersNoPassword = async (): Promise<UserNoPassword[]> => {
-  const { rows } = await pool.query(`
+  const { rows } = await pool.query<UserNoPassword>(`
     SELECT id, username, type FROM users;
   `);
 
-  return rows as UserNoPassword[];
+  return rows;
 };
 
 // Return One User with password hash
 const getUserById = async (userId: number): Promise<User> => {
-  const { rows } = await pool.query(`
-    SELECT * FROM users WHERE id = $1;
+  const { rows } = await pool.query<User>(`
+    SELECT id, username, type, password_hash FROM users WHERE id = $1;
   `, [userId]);
 
   if (rows.length != 1) {
     throw new Error('The user does not exist');
   }
 
-  return rows[0] as User;
+  return rows[0];
 };
 
 // Return One User with No Password Hash
 const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> => {
-  const { rows } = await pool.query(`
+  const { rows } = await pool.query<UserNoPassword>(`
     SELECT id, username, type FROM users WHERE id = $1;
   `, [userId]);
 
@@ -44,20 +45,20 @@ const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> =>
     throw new Error('The user does not exist');
   }
 
-  return rows[0] as UserNoPassword;
+  return rows[0];
 };
 
 // Search for User in DB and return with password hash
 const getUserByUsername = async (username: string): Promise<User> => {
-  const { rows } = await pool.query(`
-    SELECT * FROM users WHERE username = $1;
+  const { rows } = await pool.query<User>(`
+    SELECT id, username, type, password_hash FROM users WHERE username = $1;
   `, [username]);
 
   if (rows.length != 1) {
     throw new NotFoundError('Username not found');
   }
 
-  return rows[0] as User;
+  return rows[0];
 };
 
 // Create One User and return with password
@@ -66,7 +67,7 @@ const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Prom
   const passwordHash = newUserPasswordHashed.password_hash;
   const type = newUserPasswordHashed.type;
 
-  const { rows } = await pool.query(`
+  const { rows } = await pool.query<User>(`
     INSERT INTO users (username, password_hash, type)
     VALUES ($1, $2, $3)
     RETURNING *;
@@ -76,31 +77,31 @@ const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Prom
     throw new Error('Internal Server Error: could not create new user');
   }
 
-  return rows[0] as User;
+  return rows[0];
 };
 
 // Quiz Queries
 
 // Get all Quizzes (No Authorization)
-const getAllQuizzes = async () => {
-  const { rows } = await pool.query(`
-    SELECT * FROM quizzes;
+const getAllQuizzes = async (): Promise<Quiz[]> => {
+  const { rows } = await pool.query<Quiz>(`
+    SELECT id, user_id, title, timestamp FROM quizzes;
   `);
 
   return rows;
 };
 
 // Get all Quizzes By Teacher (Auth needed for teachers only)
-const getAllQuizzesByTeacher = async (successObject: LoginSuccessObject) => {
+const getAllQuizzesByTeacher = async (successObject: LoginSuccessObject): Promise<Quiz[]> => {
   if (successObject.type === 'teacher') {
-    const { rows } = await pool.query(`
-      SELECT * FROM quizzes WHERE user_id = $1;
+    const { rows } = await pool.query<Quiz>(`
+      SELECT id, user_id, title, timestamp FROM quizzes WHERE user_id = $1;
     `, [successObject.id]);
     return rows;
   } else {
-    throw new Error('Unautorhized access');
+    throw new Error('Unauthoized access');
   }
-}
+};
 
 export default {
   getUsers,

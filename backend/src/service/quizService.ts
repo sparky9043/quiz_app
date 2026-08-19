@@ -5,7 +5,7 @@ const getAllQuizzes = async () => {
   const quizzes = await queries.getAllQuizzes();
 
   return quizzes;
-}
+};
 
 const getAllQuizzesByTeacher = async (successObject: LoginSuccessObject) => {
   const quizzesByTeacher = await queries.getAllQuizzesByTeacher(successObject);
