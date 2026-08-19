@@ -20,7 +20,7 @@ const signToken = (savedUser: User, tokenExpirationMinutes: number): string => {
       id,
       username,
       type,
-    }
+    };
 
     return jsonwebtoken.sign(payload, config.SECRET, { expiresIn: 60 * tokenExpirationMinutes });
   }
