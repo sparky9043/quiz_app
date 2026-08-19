@@ -32,8 +32,8 @@ const getHttpErrorDetails = (err: HttpError): HttpErrorDetails => {
   return {
     status: err.status,
     message: err.message,
-  }
-}
+  };
+};
 
 const databaseErrorHandler = (err: unknown, _req: Request, res: Response, next: NextFunction) => {
   console.log('inside databaseErrorhandler');
