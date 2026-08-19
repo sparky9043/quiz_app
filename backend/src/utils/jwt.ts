@@ -17,11 +17,6 @@ const signToken = (savedUser: User, tokenExpirationMinutes: number): string => {
 
 const verifyToken = (rawToken: string, secretString: string) => {
   const payload = jsonwebtoken.verify(rawToken, secretString);
-
-  if (!payload) {
-    throw new Error('token invalid');
-  }
-
   return payload;
 };
 
