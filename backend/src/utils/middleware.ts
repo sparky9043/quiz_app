@@ -44,12 +44,15 @@ const databaseErrorHandler = (err: unknown, _req: Request, res: Response, next: 
     return next(err);
   }
 
+  let status = 500;
+
   if (err instanceof DatabaseError) {
     if (err.code == '23505') {
-      res
-        .status(409)
-        .json(getDatabaseErrorDetails(err));
+      status = 409;
     }
+    res
+      .status(status)
+      .json(getDatabaseErrorDetails(err));
   } else {
     next(err);
   }
