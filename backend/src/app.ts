@@ -16,6 +16,7 @@ app.use('/api/quizzes', quizRouter);
 // Error Handler Middlewares
 app.use(middleware.databaseErrorHandler);
 app.use(middleware.httpErrorHandler);
+app.use(middleware.tokenErrorHandler);
 app.use(middleware.errorHandler);
 
 export default app;
