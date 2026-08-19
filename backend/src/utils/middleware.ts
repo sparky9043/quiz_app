@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { DatabaseError } from "pg";
 import { HttpError, ValidationError } from "../errors/http.ts";
+import type { DatabaseErrorDetails, HttpErrorDetails } from "../types/status.ts";
 
 const tokenExtractor = (req: Request, _res: Response, next: NextFunction) => {
   const tokenBearer = req.get('authorization');
@@ -16,9 +17,9 @@ const tokenExtractor = (req: Request, _res: Response, next: NextFunction) => {
   next();
 };
 
-const getErrorInfoJson = (err: DatabaseError) => {
+const getDatabaseErrorDetails = (err: DatabaseError): DatabaseErrorDetails => {
   return {
-    code: err.code,
+    code: err.code!,
     success: false,
     message: err.message,
     errors: {
@@ -26,6 +27,13 @@ const getErrorInfoJson = (err: DatabaseError) => {
     },
   };
 };
+
+const getHttpErrorDetails = (err: HttpError): HttpErrorDetails => {
+  return {
+    status: err.status,
+    message: err.message,
+  }
+}
 
 const databaseErrorHandler = (err: unknown, _req: Request, res: Response, next: NextFunction) => {
   console.log('inside databaseErrorhandler');
@@ -37,7 +45,7 @@ const databaseErrorHandler = (err: unknown, _req: Request, res: Response, next: 
     if (err.code == '23505') {
       res
         .status(409)
-        .json(getErrorInfoJson(err));
+        .json(getDatabaseErrorDetails(err));
     }
   } else {
     next(err);
@@ -49,7 +57,7 @@ const httpErrorHandler = (err: unknown, _req: Request, res: Response, next: Next
   if (err instanceof HttpError) {
     res
       .status(err.status)
-      .json({ status: err.status, error: err.message });
+      .json(getHttpErrorDetails(err));
   } else {
     next(err);
   }
@@ -60,7 +68,7 @@ const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFun
   console.error('An unexpected error occurred:', err);
 
   if (err instanceof Error) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ status: 500, message: err.message });
   }
 };
 
