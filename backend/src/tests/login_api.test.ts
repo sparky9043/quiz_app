@@ -1,14 +1,11 @@
 import { describe, test, after, beforeEach } from 'node:test';
-// import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import app from '../app.ts';
 import supertest from 'supertest';
 import helper from './helper.ts';
 import type { NewUser } from '../types/user.ts';
-// import type { LoginSuccessObject } from '../types/login.ts';
 
 const loginUrl = '/api/login';
-// const userUrl = '/api/users';
 
 const agent = supertest.agent(app);
 
