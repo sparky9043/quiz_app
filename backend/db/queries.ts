@@ -1,4 +1,5 @@
 import { NotFoundError } from "../src/errors/http.ts";
+import type { LoginSuccessObject } from "../src/types/login.ts";
 import type { NewUserPasswordHashed, User, UserNoPassword } from "../src/types/user.ts";
 import pool from "./pool.ts";
 
@@ -78,6 +79,29 @@ const createNewUser = async (newUserPasswordHashed: NewUserPasswordHashed): Prom
   return rows[0] as User;
 };
 
+// Quiz Queries
+
+// Get all Quizzes (No Authorization)
+const getAllQuizzes = async () => {
+  const { rows } = await pool.query(`
+    SELECT * FROM quizzes;
+  `);
+
+  return rows;
+};
+
+// Get all Quizzes By Teacher (Auth needed for teachers only)
+const getAllQuizzesByTeacher = async (successObject: LoginSuccessObject) => {
+  if (successObject.type === 'teacher') {
+    const { rows } = await pool.query(`
+      SELECT * FROM quizzes WHERE user_id = $1;
+    `, [successObject.id]);
+    return rows;
+  } else {
+    throw new Error('Unautorhized access');
+  }
+}
+
 export default {
   getUsers,
   getUsersNoPassword,
@@ -85,4 +109,6 @@ export default {
   getUserByIdNoPassword,
   getUserByUsername,
   createNewUser,
+  getAllQuizzes,
+  getAllQuizzesByTeacher,
 };
