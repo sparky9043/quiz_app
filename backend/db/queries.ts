@@ -1,5 +1,4 @@
 import { NotFoundError } from "../src/errors/http.ts";
-import type { LoginSuccessObject } from "../src/types/login.ts";
 import type { Quiz } from "../src/types/quiz.ts";
 import type { NewUserPasswordHashed, User, UserNoPassword } from "../src/types/user.ts";
 import pool from "./pool.ts";
@@ -92,15 +91,12 @@ const getAllQuizzes = async (): Promise<Quiz[]> => {
 };
 
 // Get all Quizzes By Teacher (Auth needed for teachers only)
-const getAllQuizzesByTeacher = async (successObject: LoginSuccessObject): Promise<Quiz[]> => {
-  if (successObject.type === 'teacher') {
-    const { rows } = await pool.query<Quiz>(`
-      SELECT * FROM quizzes WHERE teacher_id = $1;
-    `, [successObject.id]);
-    return rows;
-  } else {
-    throw new Error('Unauthoized access');
-  }
+const getAllQuizzesByTeacherId = async (teacherId: number): Promise<Quiz[]> => {
+  const { rows } = await pool.query<Quiz>(`
+    SELECT * FROM quizzes WHERE teacher_id = $1;
+  `, [teacherId]);
+
+  return rows;
 };
 
 export default {
@@ -111,5 +107,5 @@ export default {
   getUserByUsername,
   createNewUser,
   getAllQuizzes,
-  getAllQuizzesByTeacher,
+  getAllQuizzesByTeacherId,
 };
