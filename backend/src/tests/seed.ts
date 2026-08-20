@@ -233,6 +233,42 @@ const seed = async () => {
 
   try {
     await client.query('BEGIN');
+    // --- Create tables if they don't exist yet (parents first) ---
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id            SERIAL PRIMARY KEY,
+        username      TEXT NOT NULL UNIQUE,
+        password_hash TEXT NOT NULL,
+        type          TEXT NOT NULL CHECK (type IN ('teacher', 'student')),
+        teacher_id    INTEGER REFERENCES users(id) ON DELETE SET NULL
+      );
+    `);
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS quizzes (
+        id         SERIAL PRIMARY KEY,
+        teacher_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        title      TEXT NOT NULL,
+        timestamp  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+    `);
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS questions (
+        id      SERIAL PRIMARY KEY,
+        quiz_id INTEGER NOT NULL REFERENCES quizzes(id) ON DELETE CASCADE,
+        content TEXT NOT NULL
+      );
+    `);
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS options (
+        id          SERIAL PRIMARY KEY,
+        question_id INTEGER NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+        content     TEXT NOT NULL,
+        is_correct  BOOLEAN NOT NULL DEFAULT FALSE
+      );
+    `);
 
     // Wipe all four tables and reset id sequences back to 1
     await client.query(`
