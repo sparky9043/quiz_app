@@ -41,4 +41,23 @@ quizRouter.get('/', middleware.tokenExtractor, async (req: Request, res: Respons
   }
 });
 
+quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.get('authorization');
+
+    if (!token) {
+      throw new Error('no token found in the request handler');
+    }
+
+    const quizId = Number(req.params.id);
+
+    console.log(quizId, token);
+
+    res.status(200).json({ success: 'success' });
+
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default quizRouter;
