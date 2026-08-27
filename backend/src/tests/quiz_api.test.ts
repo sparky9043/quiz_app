@@ -41,6 +41,15 @@ void describe('After Logging in and accessing /api/quizzes', async () => {
       .set('Authorization', tokenBearer)
       .expect(200);
   });
+
+  void test('Throw error if the quiz is not created by teacher', async () => {
+    const quizId = 3;
+
+    await agent
+      .get(`${quizUrl}/${quizId}`)
+      .set('Authorization', tokenBearer)
+      .expect(404);
+  });
 });
 
 after(async () => {

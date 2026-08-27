@@ -106,7 +106,7 @@ const getOneQuizById = async (quizId: number, teacherId: number): Promise<Quiz> 
   `, [quizId, teacherId]);
 
   if (rows.length != 1) {
-    throw new Error('quiz not found or the teacher does not have access to this quiz');
+    throw new NotFoundError('quiz not found or the teacher does not have access to this quiz');
   }
 
   return rows[0];
