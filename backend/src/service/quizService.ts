@@ -14,7 +14,6 @@ const getAllQuizzesByTeacherId = async (teacherId: number): Promise<Quiz[]> => {
 };
 
 const getOneQuizById = async(quizId: number, teacherId: number): Promise<Quiz> => {
-  console.log(quizId, teacherId);
   const quiz = await queries.getOneQuizById(quizId, teacherId);
 
   return quiz;
