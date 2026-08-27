@@ -66,7 +66,9 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 
     console.log(quizId, teacherId);
 
-    res.status(200).json({ success: 'success' });
+    const quiz = await quizService.getOneQuizById(quizId, teacherId);
+
+    res.status(200).json(quiz);
 
   } catch (error) {
     next(error);

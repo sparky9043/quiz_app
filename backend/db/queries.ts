@@ -100,6 +100,18 @@ const getAllQuizzesByTeacherId = async (teacherId: number): Promise<Quiz[]> => {
   return rows;
 };
 
+const getOneQuizById = async (quizId: number, teacherId: number): Promise<Quiz> => {
+  const { rows } = await pool.query<Quiz>(`
+    SELECT * FROM quizzes WHERE id = $1 AND teacher_id = $2;
+  `, [quizId, teacherId]);
+
+  if (rows.length != 1) {
+    throw new Error('quiz not found or the teacher does not have access to this quiz');
+  }
+
+  return rows[0];
+};
+
 export default {
   getUsers,
   getUsersNoPassword,
@@ -109,4 +121,5 @@ export default {
   createNewUser,
   getAllQuizzes,
   getAllQuizzesByTeacherId,
+  getOneQuizById,
 };
