@@ -51,7 +51,20 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 
     const quizId = Number(req.params.id);
 
-    console.log(quizId, token);
+    const loginSuccessObject = jwt.verifyToken(token, config.SECRET) as LoginSuccessObject;
+
+    let teacherId;
+    if (loginSuccessObject.type == 'teacher') {
+      teacherId = loginSuccessObject.id;
+    } else if (loginSuccessObject.type == 'teacher') {
+      teacherId = loginSuccessObject.teacher_id;
+    }
+
+    if (!teacherId) {
+      throw new Error('No teacher Id found');
+    }
+
+    console.log(quizId, teacherId);
 
     res.status(200).json({ success: 'success' });
 
