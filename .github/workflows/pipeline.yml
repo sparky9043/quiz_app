@@ -32,3 +32,5 @@ jobs:
                 node-version: '24'
             - name: Install dependencies
               run: npm install
+            - name: Run Component test
+              run: npm test
