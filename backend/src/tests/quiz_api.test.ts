@@ -1,5 +1,5 @@
 import { describe, test, after, beforeEach } from 'node:test';
-import assert from 'node:assert';
+// import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import app from '../app.ts';
 import supertest from 'supertest';
@@ -31,8 +31,15 @@ void describe('After Logging in and accessing /api/quizzes', async () => {
       .get(quizUrl)
       .set('Authorization', tokenBearer)
       .expect(200);
+  });
 
-    assert.strictEqual(true, true);
+  void test('Return one quiz by teacher', async () => {
+    const quizId = 2;
+
+    await agent
+      .get(`${quizUrl}/${quizId}`)
+      .set('Authorization', tokenBearer)
+      .expect(200);
   });
 });
 
