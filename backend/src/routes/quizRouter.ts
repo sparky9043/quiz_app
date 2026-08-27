@@ -56,7 +56,7 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
     let teacherId;
     if (loginSuccessObject.type == 'teacher') {
       teacherId = loginSuccessObject.id;
-    } else if (loginSuccessObject.type == 'teacher') {
+    } else if (loginSuccessObject.type == 'student') {
       teacherId = loginSuccessObject.teacher_id;
     }
 
