@@ -1,5 +1,5 @@
 import queries from "../../db/queries.ts";
-import type { NewUser, User, UserNoPassword } from "../types/user.ts";
+import type { NewUserRequest, User, UserNoPassword } from "../types/user.ts";
 import pwd from "../utils/pwd.ts";
 
 // Get users list with no password
@@ -24,7 +24,7 @@ const getUserByIdNoPassword = async (userId: number): Promise<UserNoPassword> =>
 };
 
 // Create User (hash password) and return created User
-const createNewUser = async (newUserRequestBody: NewUser) => {
+const createNewUser = async (newUserRequestBody: NewUserRequest) => {
   const rawPassword = newUserRequestBody.password;
   
   // Hash raw password using bcrypt

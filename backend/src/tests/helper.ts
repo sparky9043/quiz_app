@@ -1,5 +1,5 @@
 import pool from "../../db/pool.ts";
-import type { NewUser, UserNoPassword } from "../types/user.ts";
+import type { NewUserRequest, UserNoPassword } from "../types/user.ts";
 import config from "../utils/config.ts";
 import pwd from "../utils/pwd.ts";
 
@@ -7,21 +7,21 @@ const teacher = {
   username: 'default',
   password: 'password123',
   type: 'teacher'
-} as NewUser;
+} as NewUserRequest;
 
 const student1 = {
   username: 'second',
   password: 'password123',
   type: 'student',
   teacher_id: 1,
-} as NewUser;
+} as NewUserRequest;
 
 const student2 = {
   username: 'third',
   password: 'password123',
   type: 'student',
   teacher_id: 1,
-} as NewUser;
+} as NewUserRequest;
 
 const newUsers = [
   teacher,
@@ -36,7 +36,7 @@ const resetDbTables = async () => {
   `);
 };
 
-const addUserToTable = async (newUser: NewUser) => {
+const addUserToTable = async (newUser: NewUserRequest) => {
   const passwordHash = await pwd.hash(newUser.password);
   await pool.query(`
     INSERT INTO users (username, password_hash, type, teacher_id)

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express";
 import userService from "../service/userService.ts";
-import type { NewUser, User, UserNoPassword } from "../types/user.ts";
+import type { NewUserRequest, User, UserNoPassword } from "../types/user.ts";
 
 const userRouter = Router();
 
@@ -32,7 +32,7 @@ userRouter.get('/:id', async (req: Request<{ id: string }>, res: Response<UserNo
 });
 
 // POST request to /api/users creates new user
-userRouter.post('/', async (req: Request<unknown, unknown, NewUser>, res: Response<User>, next: NextFunction) => {
+userRouter.post('/', async (req: Request<unknown, unknown, NewUserRequest>, res: Response<User>, next: NextFunction) => {
   const newUserRequestBody = req.body;
   const userTypes = ['student', 'teacher'];
 

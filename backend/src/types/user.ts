@@ -18,7 +18,7 @@ export interface User extends NewUserPasswordHashed {
   password_hash: string;
 }
 
-export interface NewUser extends BaseUser {
+export interface NewUserRequest extends BaseUser {
   password: string;
   teacher_id?: number;
 };
