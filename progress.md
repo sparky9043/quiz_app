@@ -17,3 +17,13 @@
 6. Initialize `vitest` and `react-testing-library` for the frontend
 7. Create workflows to include `frontend` in the `pipeline.yml` folder
 8. Include `npm test` in the pipeline
+
+
+### 8/31/2026
+1. Change `user` type names from `NewUser` to `NewUser` request for clarity
+2. Install React Router on the frontend
+3. Review how to use data mode in React Router
+    - Create a `tsx` file for App Routes
+    - Use `createBrowserRouter` method to provide a set of routes and their respective components and export the route as default
+    - Use the App Routes inside the main and pass it into `<RouterProvider router={AppRoutes}>`
+    - Note: This is the recommended approach, as opposed to the original declariative mode
