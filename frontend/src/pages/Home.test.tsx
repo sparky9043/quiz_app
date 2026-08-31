@@ -20,17 +20,6 @@ describe('Home Component', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/login/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'login' })).toBeInTheDocument();
   });
-
-  it('moves to Login page when clicking login link', () => {
-    render(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>
-    );
-
-    expect(true).toEqual(true);
-  });
-  
 });
