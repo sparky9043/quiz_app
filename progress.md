@@ -27,3 +27,26 @@
     - Use `createBrowserRouter` method to provide a set of routes and their respective components and export the route as default
     - Use the App Routes inside the main and pass it into `<RouterProvider router={AppRoutes}>`
     - Note: This is the recommended approach, as opposed to the original declariative mode
+4. Create the following pages and their child components:
+    - `Home.tsx` + `Home.test.tsx`
+    - `LoginPage.tsx` + `LoginPage.test.tsx`
+        - This consists of the title and a child component `LoginForm.tsx` which has the testing file `LoginForm.test.tsx`
+5. Ensure that `<Link>` component from `react-router` can be tested
+    - `render(<Component />, { wrapper: BrowserRouter })` can let you render the target component within the `BrowserRouter` wrapper.
+    - However, I still don't know how to click between links. But maybe this can be done in e2e testing with `playwright`? Still debating
+6. Learned how to correctly type input elements when using `React Testing Library`
+    ```typescript
+        const inputElement = screen.getByLabelText('some-input');
+        // This element has a generic type of "HTML Element" which doesn't have
+        // access to value
+
+        // Alternate solution
+        const inputElement = screen.getByLabelText<HTMLInputElement>('some-input');
+        // By letting TS know that this element will be an Input Element
+        // we now have access to inputElement.value
+    ```
+
+### Potential To-Do for next time
+1. Create Pages that require login and then render quizzes in those pages
+2. Create unit tests for the renders using `React Testing Library`
+3. If using `useEffect` to render data goes well, try using `React Query` instead
