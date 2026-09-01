@@ -45,7 +45,6 @@ const LoginForm = () => {
       const response = await axios.post('/api/login', loginCredentials);
 
       if (localStorage.getItem('userLoginSuccess')) {
-        console.log('item removed');
         localStorage.removeItem('userLoginSucces');
       }
       
