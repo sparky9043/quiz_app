@@ -1,10 +1,10 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import type { UserLoginCredentials } from "../../types/user";
 
 const LoginForm = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,7 +43,7 @@ const LoginForm = () => {
 
       const response = await axios.post('/api/login', loginCredentials);
       console.log(response.data);
-
+      navigate('/dashboard');
 
     } catch(error: unknown) {
       if (error instanceof Error) {
