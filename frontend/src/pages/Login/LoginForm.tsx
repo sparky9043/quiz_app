@@ -18,6 +18,7 @@ const LoginForm = () => {
         throw new Error('Please enter both username and password');
       }
 
+      // ensure user login credential only contains username and password
       const checkUser = (input: unknown): input is UserLoginCredentials => {
         const loginCred = input as UserLoginCredentials
 
@@ -35,14 +36,21 @@ const LoginForm = () => {
         }
 
         return false;
-      }
+      };
 
       if (!checkUser(loginCredentials)) {
         throw new Error('Make sure you fill out both username and password');
       }
 
       const response = await axios.post('/api/login', loginCredentials);
-      console.log(response.data);
+
+      if (localStorage.getItem('userLoginSuccess')) {
+        console.log('item removed');
+        localStorage.removeItem('userLoginSucces');
+      }
+      
+      localStorage.setItem('userLoginSuccess', JSON.stringify(response.data));
+
       navigate('/dashboard');
 
     } catch(error: unknown) {
