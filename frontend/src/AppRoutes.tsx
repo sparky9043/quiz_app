@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import LoginPage from "./pages/Login/LoginPage";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import QuizPage from "./pages/Quiz/QuizPage";
 
 const AppRoutes = createBrowserRouter([
   {
@@ -20,6 +21,12 @@ const AppRoutes = createBrowserRouter([
       {
         path: '/dashboard',
         element: <DashboardPage />,
+        children: [
+          {
+            path: 'quiz',
+            element: <QuizPage />,
+          }
+        ]
       }
     ]
   }
