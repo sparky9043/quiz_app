@@ -46,6 +46,27 @@
         // we now have access to inputElement.value
     ```
 
+### 9/1/2026
+1. Finally figured out how to use `<MemoryRouter>` with `initialEntries` as a way to mock paths.
+    - First use `render` function with `<MemoryRouter initialEntries=['/path']>` and wrap it around the desired component
+    - This will render the component statically with the desired path
+2. Figured out how to use `<MemoryRouter>` and combine it with React Router components to render specific path rendering including `<Outlet>`
+    - Example: If the goal is to trigger the target component to render its child component when a specific path is triggered, one must do both: render `<MemoryRouter>` with specific `initialEntries` and `Route` components
+    
+    Here is a short example:
+    ```mdx
+        <MemoryRouter initialEntries={['/path/child']}>
+            <Routes>
+                <Route path='/path' element={<Parent />} >
+                    <Route path='child' element={<Child />} />
+                </Route>
+            </Routes>
+        </MemoryRouter>
+    ```
+    - The above code does 2 things: provides the path to go to using the `MemoryRouter` and tells what to trigger when the path is there. The `Route` component triggers the component and its children to be rendered upon specified path
+3. Created basic `ProtectedRoute` component, which will render its children as `<Outlet />`
+4. Created more tests for `DashboardPage`, `QuizPage` to ensure that each of the components are properly wrapped around `BrowserRouter` and the tests run correctly
+
 ### Potential To-Do for next time
 1. Create Pages that require login and then render quizzes in those pages
 2. Create unit tests for the renders using `React Testing Library`
