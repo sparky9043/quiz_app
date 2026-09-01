@@ -72,3 +72,4 @@
 1. Consider refactoring all `axios` functions to `service` functions
 2. Consider switching `useEffect` with React Query. But maybe do this after deploying?
 3. Once all the login functions work barely, consider deploying to render
+4. `DashboardPage.test.tsx` and `QuizPage.test.tsx` are throwing errors. Find out why.
