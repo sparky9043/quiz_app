@@ -1,6 +1,7 @@
 import { useState } from "react";
 // import { useNavigate } from "react-router";
 import axios from "axios";
+import type { UserLoginCredentials } from "../../types/user";
 
 const LoginForm = () => {
   // const navigate = useNavigate();
@@ -8,13 +9,36 @@ const LoginForm = () => {
   const handleLogin = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      if (!username || !password) {
-        throw new Error('Make sure you fill out all required fields');
-      }
-
       const loginCredentials = {
         username,
         password,
+      }
+    
+      if (!username || !password) {
+        throw new Error('Please enter both username and password');
+      }
+
+      const checkUser = (input: unknown): input is UserLoginCredentials => {
+        const loginCred = input as UserLoginCredentials
+
+        if (typeof loginCred != 'object') {
+          throw new Error('invalid data type');
+        }
+
+        if (typeof loginCred == 'object') {
+          if (
+            ('username' in loginCred && 'password' in loginCred) &&
+            (Object.keys(loginCred).length == 2)
+          ) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      if (!checkUser(loginCredentials)) {
+        throw new Error('Make sure you fill out both username and password');
       }
 
       const response = await axios.post('/api/login', loginCredentials);
