@@ -1,10 +1,11 @@
 import LoginForm from "./LoginForm";
 import { render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter } from "react-router";
 
 describe('LoginForm component', () => {
   it('renders input elements and login button to page', () => {
-    render(<LoginForm />);
+    render(<LoginForm />, { wrapper: BrowserRouter });
 
     expect(screen.getByLabelText('username')).toBeInTheDocument();
     expect(screen.getByLabelText('password')).toBeInTheDocument();
@@ -14,7 +15,7 @@ describe('LoginForm component', () => {
   it('allows user to enter value to input elements', async () => {
     const user = userEvent.setup();
 
-    render(<LoginForm />);
+    render(<LoginForm />, { wrapper: BrowserRouter });
 
     const usernameInputEl = screen.getByLabelText<HTMLInputElement>('username');
     const passwordInputEl = screen.getByLabelText<HTMLInputElement>('password');
