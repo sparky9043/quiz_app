@@ -66,8 +66,9 @@
     - The above code does 2 things: provides the path to go to using the `MemoryRouter` and tells what to trigger when the path is there. The `Route` component triggers the component and its children to be rendered upon specified path
 3. Created basic `ProtectedRoute` component, which will render its children as `<Outlet />`
 4. Created more tests for `DashboardPage`, `QuizPage` to ensure that each of the components are properly wrapped around `BrowserRouter` and the tests run correctly
+5. Use `useEffect` hook with authorization header and JSON Web Token to properly fetch desired quizzes for successful outcome
 
 ### Potential To-Do for next time
-1. Create Pages that require login and then render quizzes in those pages
-2. Create unit tests for the renders using `React Testing Library`
-3. If using `useEffect` to render data goes well, try using `React Query` instead
+1. Consider refactoring all `axios` functions to `service` functions
+2. Consider switching `useEffect` with React Query. But maybe do this after deploying?
+3. Once all the login functions work barely, consider deploying to render
