@@ -1,9 +1,31 @@
 import { useState } from "react";
+// import { useNavigate } from "react-router";
+import axios from "axios";
 
 const LoginForm = () => {
-  const handleLogin = (event: React.SubmitEvent<HTMLFormElement>) => {
+  // const navigate = useNavigate();
+
+  const handleLogin = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(username, password);
+    try {
+      if (!username || !password) {
+        throw new Error('Make sure you fill out all required fields');
+      }
+
+      const loginCredentials = {
+        username,
+        password,
+      }
+
+      const response = await axios.post('/api/login', loginCredentials);
+      console.log(response.data);
+
+
+    } catch(error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 
   const [username, setUsername] = useState<string>("");
