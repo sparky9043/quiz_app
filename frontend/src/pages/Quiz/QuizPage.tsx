@@ -14,17 +14,6 @@ const setToken = (newToken: string) => {
 
 const QuizPage = () => {
   const [quizList, setQuizList] = useState<Quiz[]>([]);
-  // const navigate = useNavigate();
-
-  const userLoginInfo = localStorage.getItem('userLoginSuccess');
-
-  if (!userLoginInfo) {
-    return <Navigate to='/login' />
-  }
-
-  const userLoginJSON = JSON.parse(userLoginInfo) as UserLoginSuccessObject;
-
-  setToken(userLoginJSON.token);
 
   useEffect(() => {
     void (async () => {
@@ -42,13 +31,20 @@ const QuizPage = () => {
           },
         );
 
-      if (!Array.isArray(response.data)) {
-        throw new Error('Internal server error');
-      }
-
       setQuizList(response.data);
     })();
-  }, [token]);
+  }, []);
+  
+  const userLoginInfo = localStorage.getItem('userLoginSuccess');
+  
+  if (!userLoginInfo) {
+    return <Navigate to='/login' />
+  }
+
+  const userLoginJSON = JSON.parse(userLoginInfo) as UserLoginSuccessObject;
+
+  setToken(userLoginJSON.token);
+
 
   return (
     <div>
