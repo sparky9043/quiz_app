@@ -17,6 +17,8 @@ const ProtectedRoute = () => {
   const userLoginJSON = JSON.parse(userLoginString) as UserLoginSuccessObject;
   setToken(userLoginJSON.token);
 
+  console.log(token);
+
   return (
     <div>
       <Outlet />
