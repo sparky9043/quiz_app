@@ -68,6 +68,47 @@
 4. Created more tests for `DashboardPage`, `QuizPage` to ensure that each of the components are properly wrapped around `BrowserRouter` and the tests run correctly
 5. Use `useEffect` hook with authorization header and JSON Web Token to properly fetch desired quizzes for successful outcome
 
+### 9/2/2026
+1. Install and configure `tailwindcss`
+2. Learned that learned that when you import `tailwind` through a css file, you're injecting several things at once:
+    ```css
+        @import 'tailwindcss';
+    ```
+    This line is equivalent to 4 lines in one:
+    ```css
+        @layer theme, base, components, utilities; /* establishes hierarchy of priority of styles */
+
+        @import 'tailwindcss/theme.css' layer(theme); /* imports all of design tokens and calls it "theme" */
+        @import 'tailwindcss/preflight.css' layer(base); /* imports all of resets and calls it "base" */
+        @import 'tailwindcss/utilities.css' layer(utilities); /* imports all of utility classes and calls it "utilities" */
+    ```
+3. In order to get rid of unnecessary resets, you need to get rid of `@import 'tailwindcss/preflight.css layer(base)`. This will help me remove forceful resets by tailwind
+4. If I want to import my own resets, I have couple of options:
+    a. I can import my own `reset.css` file and import it into my project (i.e. `React`)
+    b. I can create my own css file and use `@layer name` to create my own styles. Here is an example:
+    ```css
+        /* custom-style.css */
+        @layer reset {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* and other resets */
+        }
+
+        /* tailwind-import-file.css */
+        @layer reset, ...; /* include it */
+
+        @import './relative/path/custom-style.css';
+
+    ```
+5. Deployed application on render and debugged a deployment error. The error happened because the `frontend` folders dependencies were not installed and, therefore, any command that used any features in the frontend were throwing errors
+6. Used `app.use(express.static('dist'))` to serve the application with a frontend "shell" made by building the application in the frontend:
+    a. Run `npm run build` in the `frontend/` directory, which will create a `dist` folder
+    b. Run `cp -r dist ../backend`, which will copy the entire directory. The `-r` flag is responsible for the "recursive" copying of the entire directory.
+    c. Instruct the Express app file to use the static files in the `dist/` directory by calling `app.use(express.static('dist'))` function
+
 ### Potential To-Do for next time
 1. Consider refactoring all `axios` functions to `service` functions
 2. Consider switching `useEffect` with React Query. But maybe do this after deploying?
