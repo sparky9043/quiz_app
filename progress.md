@@ -111,6 +111,9 @@
 
 ### Potential To-Do for next time
 1. Consider refactoring all `axios` functions to `service` functions
-2. Consider switching `useEffect` with React Query. But maybe do this after deploying?
-3. Once all the login functions work barely, consider deploying to render
-4. `DashboardPage.test.tsx` and `QuizPage.test.tsx` are throwing errors. Find out why.
+2. Work on `questionRouter.ts`
+    a. Access / authorization -> who will have access to questions?
+    b. How do I fetch questions based on quiz ID? (update `service` and `query` functions)
+    c. Who can see the questions and how will they determine? (teacher will use their ID and student will use teacher_id tied to their data)
+3. Don't forget to update to local database while updating `questionRouter`
+4. Make sure to write tests for `questionRouter` in the backend
