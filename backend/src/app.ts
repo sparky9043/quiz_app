@@ -7,6 +7,7 @@ import quizRouter from './routes/quizRouter.ts';
 const app = express();
 
 app.use(express.json());
+app.use(express.static('dist'));
 
 // Routers
 app.use('/api/login', loginRouter);
