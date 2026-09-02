@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import './tailwind-config.css'
 import './reset.css'
 import AppRoutes from './AppRoutes.tsx'
 import { RouterProvider } from 'react-router'
