@@ -11,7 +11,9 @@
     "test": "node --require ts-node/register --test",
     "test:login": "node --require ts-node/register --test src/tests/login_api.test.ts",
     "test:user": "node --require ts-node/register --test src/tests/user_api.test.ts",
-    "test:quiz": "node --require ts-node/register --test src/tests/quiz_api.test.ts"
+    "test:quiz": "node --require ts-node/register --test src/tests/quiz_api.test.ts",
+    "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
   "keywords": [],
   "author": "",
