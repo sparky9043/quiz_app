@@ -1,6 +1,16 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const DashboardNav = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = (event: React.SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    // remove user token from local storage
+    localStorage.removeItem('userLoginSuccess');
+    navigate('/');
+  }
+
   return (
     <nav className="p-4">
       <ul className="flex justify-between items-center">
@@ -8,9 +18,11 @@ const DashboardNav = () => {
           <Link to='quiz'>Quiz</Link>
         </li>
         <li>
-          <button>
-            logout
-          </button>
+          <form onSubmit={handleLogout}>
+            <button type="submit">
+              logout
+            </button>
+          </form>
         </li>
       </ul>
     </nav>   
