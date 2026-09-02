@@ -1,4 +1,5 @@
-import { Link, Outlet, useLocation } from "react-router";
+import { Outlet, useLocation } from "react-router";
+import DashboardNav from "./DashboardNav";
 
 const DashboardPage = () => {
   const location = useLocation();
@@ -10,11 +11,7 @@ const DashboardPage = () => {
 
   return (
     <div>
-      <nav>
-        <li>
-          <Link to='quiz'>Quiz</Link>
-        </li>
-      </nav>
+      <DashboardNav />
       {currentPath == '/dashboard' ? dashboardComponents() : <Outlet />}
     </div>
   )
