@@ -6,7 +6,7 @@ const DashboardNav = () => {
       <li>
         <Link to='quiz'>Quiz</Link>
       </li>
-  </nav>   
+    </nav>   
   )
 }
 
