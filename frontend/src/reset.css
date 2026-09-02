@@ -30,6 +30,8 @@ img, picture, video, canvas, svg {
 
 ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 /* 7. Inherit fonts for form controls */
