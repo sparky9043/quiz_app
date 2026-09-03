@@ -2,8 +2,8 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
-describe('Truthy statement', () => {
-  test('True is true', () => {
+void describe('Truthy statement', () => {
+  void test('True is true', () => {
     assert.strictEqual(true, true);
   });
 });
