@@ -1,3 +1,6 @@
+import * as z from 'zod';
+import { UserLoginCredentialsSchema } from '../schema/user.schema.ts';
+
 export interface BaseUser {
   username: string;
   type: 'teacher' | 'student';
@@ -23,7 +26,4 @@ export interface NewUserRequest extends BaseUser {
   teacher_id?: number;
 };
 
-export interface UserLoginCredentials {
-  username: string;
-  password: string;
-};
+export type UserLoginCredentials = z.infer<typeof UserLoginCredentialsSchema>;
