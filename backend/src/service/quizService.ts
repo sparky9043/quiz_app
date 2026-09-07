@@ -21,7 +21,7 @@ const getQuizWithQuestionsById = async(quizId: number, teacherId: number): Promi
   const quizWithQuestions = {
     ...quiz,
     questions,
-  }
+  };
 
   return quizWithQuestions;
 };
