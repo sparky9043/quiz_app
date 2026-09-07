@@ -129,10 +129,10 @@
 
 
 ### Potential To-Do for next time
-1. Consider refactoring all `axios` functions to `service` functions
-2. Work on `questionRouter.ts`
-    a. Access / authorization -> who will have access to questions?
-    b. How do I fetch questions based on quiz ID? (update `service` and `query` functions)
-    c. Who can see the questions and how will they determine? (teacher will use their ID and student will use teacher_id tied to their data)
-3. Don't forget to update to local database while updating `questionRouter`
-4. Make sure to write tests for `questionRouter` in the backend
+1. GET Requests for questions with selections -> kind of like how I used quizzes and questions together?
+2. Maybe creating POST requests for questions, quizzes and answer selections?
+    - First create quizzes
+    - Then Add qustions with their correct answer selections
+3. Maybe an `Attempt` model for creating an actual full quiz for students to take
+    - should be unique for each student
+    - should have only one combination
