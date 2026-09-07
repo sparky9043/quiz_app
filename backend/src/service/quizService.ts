@@ -1,5 +1,6 @@
 import queries from "../../db/queries.ts";
 import type { Quiz, QuizWithQuestions } from "../types/quiz.ts";
+import questionService from "./questionService.ts";
 
 const getAllQuizzes = async () => {
   const quizzes = await queries.getAllQuizzes();
@@ -16,7 +17,7 @@ const getAllQuizzesByTeacherId = async (teacherId: number): Promise<Quiz[]> => {
 const getQuizWithQuestionsById = async(quizId: number, teacherId: number): Promise<QuizWithQuestions> => {
   const quiz = await queries.getOneQuizById(quizId, teacherId);
 
-  const questions = await queries.getQuestionsByQuizId(quizId);
+  const questions = await questionService.getQuestionsByQuizId(quizId);
 
   const quizWithQuestions = {
     ...quiz,
