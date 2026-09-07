@@ -34,7 +34,7 @@ void describe('After Logging in and accessing /api/quizzes', async () => {
   });
 
   void test('Return one quiz by teacher', async () => {
-    const quizId = 2;
+    const quizId = 1;
 
     await agent
       .get(`${quizUrl}/${quizId}`)
