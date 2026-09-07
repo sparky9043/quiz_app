@@ -109,6 +109,15 @@
     b. Run `cp -r dist ../backend`, which will copy the entire directory. The `-r` flag is responsible for the "recursive" copying of the entire directory.
     c. Instruct the Express app file to use the static files in the `dist/` directory by calling `app.use(express.static('dist'))` function
 
+### 9/7/2026
+1. Install `zod` to start validating requests.
+2. Create `user.schema.ts` for user-related `zod` schemas.
+3. Create `UserLoginCredentialSchema` and `LoginSuccessObjectSchema` for handling validation and infer types using `zod` schemas.
+4. Create `loginRequestValidator` middleware and use it specifically for POST Requests to `/api/login` path and use `UserLoginCredentialsSchema.parse(req.body)` to parse and validate incoming login requests
+5. Create `zodErrorHandler` for handling `ZodError` types (to be expanded further)
+6. Replace rough type assertions with `Schema.parse(target)` methods.
+7. Create `QuizWithQuestions` type, extended from `Quiz` with questions that have an array of `Question` types.
+
 ### Potential To-Do for next time
 1. Consider refactoring all `axios` functions to `service` functions
 2. Work on `questionRouter.ts`
