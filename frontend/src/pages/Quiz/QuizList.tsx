@@ -1,4 +1,5 @@
 import type { Quiz } from '../../types/quiz';
+import QuizItem from './QuizItem';
 
 interface QuizListProps {
   quizList: Quiz[],
@@ -15,11 +16,9 @@ const QuizList = (props: QuizListProps) => {
 
   return (
     <ul>
-      {props.quizList && props.quizList.map(quiz => <li key={quiz.id}>
-        <div>
-          {quiz.title}
-        </div>
-      </li>)}
+      {props.quizList.map(quiz =>
+          <QuizItem key={quiz.id} quiz={quiz} />
+      )}
     </ul>
   )
 };
