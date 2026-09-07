@@ -50,7 +50,9 @@ const QuizPage = () => {
   return (
     <div>
       <h2>Quiz Page</h2>
-      <QuizList quizList={quizList} />
+      {
+        quizList && <QuizList quizList={quizList} />
+      }
     </div>
   )
 }

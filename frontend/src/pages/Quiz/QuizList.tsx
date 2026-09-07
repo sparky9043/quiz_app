@@ -5,7 +5,7 @@ interface QuizListProps {
 }
 
 const QuizList = (props: QuizListProps) => {
-  if (!props.quizList) {
+  if (!props.quizList.length) {
     return (
       <div>
         There are no quizzes on this list
