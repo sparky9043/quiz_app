@@ -3,8 +3,16 @@ import { DatabaseError } from "pg";
 import { HttpError, ValidationError } from "../errors/http.ts";
 import type { DatabaseErrorDetails, HttpErrorDetails } from "../types/status.ts";
 import jsonwebtoken from 'jsonwebtoken';
+import { UserLoginCredentialsSchema } from "../schema/user.schema.ts";
 
 const { JsonWebTokenError } = jsonwebtoken;
+
+const loginRequestValidator = (req: Request<unknown, unknown, unknown>, _res: Response, next: NextFunction) => {
+
+  UserLoginCredentialsSchema.parse(req.body);
+
+  next();
+};
 
 const tokenExtractor = (req: Request, _res: Response, next: NextFunction) => {
   const tokenBearer = req.get('authorization');
@@ -98,6 +106,7 @@ const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFun
 };
 
 export default {
+  loginRequestValidator,
   tokenExtractor,
   databaseErrorHandler,
   httpErrorHandler,

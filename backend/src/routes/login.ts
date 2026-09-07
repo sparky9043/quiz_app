@@ -3,10 +3,11 @@ import { Router } from "express";
 import type { UserLoginCredentials } from "../types/user.ts";
 import loginService from "../service/loginService.ts";
 import type { LoginSuccessObject } from "../types/login.ts";
+import middleware from "../utils/middleware.ts";
 
 const loginRouter = Router();
 
-loginRouter.post('/', async (req: Request<unknown, unknown, UserLoginCredentials>, res: Response<LoginSuccessObject>, next: NextFunction) => {
+loginRouter.post('/', middleware.loginRequestValidator, async (req: Request<unknown, unknown, UserLoginCredentials>, res: Response<LoginSuccessObject>, next: NextFunction) => {
   try {
     const userLoginCredentals = req.body;
 
