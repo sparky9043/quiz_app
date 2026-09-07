@@ -11,10 +11,6 @@ loginRouter.post('/', middleware.loginRequestValidator, async (req: Request<unkn
   try {
     const userLoginCredentals = req.body;
 
-    if (!userLoginCredentals.username || !userLoginCredentals.password) {
-      throw new Error('please enter both the username and password');
-    }
-
     const response = await loginService.login(userLoginCredentals);
 
     res.status(200).json(response);
