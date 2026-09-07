@@ -5,4 +5,4 @@ const UserLoginCredentialsSchema = z.object({
   password: z.string(),
 });
 
-export { UserLoginCredentialsSchema }
+export { UserLoginCredentialsSchema };
