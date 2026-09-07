@@ -13,4 +13,13 @@ const LoginSuccsesObjectSchema = z.object({
   teacher_id: z.number().optional(),
 });
 
-export { UserLoginCredentialsSchema, LoginSuccsesObjectSchema };
+const JWTVerifiedTokenObject = z.object({
+  id: z.number(),
+  username: z.string(),
+  type: z.string(),
+  teacher_id: z.number().optional(),
+  iat: z.number(),
+  exp: z.number(),
+});
+
+export { UserLoginCredentialsSchema, LoginSuccsesObjectSchema, JWTVerifiedTokenObject };
