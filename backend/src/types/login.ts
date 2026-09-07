@@ -1,7 +1,4 @@
-export interface LoginSuccessObject {
-  token: string;
-  id: number;
-  username: string;
-  type: string;
-  teacher_id?: number;
-}
+import * as z from "zod";
+import { LoginSuccsesObjectSchema } from "../schema/user.schema.ts";
+
+export type LoginSuccessObject = z.infer<typeof LoginSuccsesObjectSchema>;

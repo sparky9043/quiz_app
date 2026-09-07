@@ -1,5 +1,6 @@
 import queries from "../../db/queries.ts";
 import { UnauthorizedError } from "../errors/http.ts";
+import { LoginSuccsesObjectSchema } from "../schema/user.schema.ts";
 import type { LoginSuccessObject } from "../types/login.ts";
 import type { UserLoginCredentials } from "../types/user.ts";
 import jwt from "../utils/jwt.ts";
@@ -25,6 +26,8 @@ const login = async (userLoginCredentals: UserLoginCredentials): Promise<LoginSu
     type: savedUser.type,
     username: savedUser.username,
   } as LoginSuccessObject;
+
+  LoginSuccsesObjectSchema.parse(loginSuccessObject);
 
   if (savedUser.teacher_id) {
     loginSuccessObject.teacher_id = savedUser.teacher_id;
