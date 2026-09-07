@@ -11,6 +11,10 @@ export interface Question {
   content: string;
 }
 
+export interface QuizWithQuestions extends Quiz {
+  questions: Question[],
+}
+
 export interface OptionNoAnswer {
   id: number;
   question_id: number;
