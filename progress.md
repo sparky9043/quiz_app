@@ -110,6 +110,7 @@
     c. Instruct the Express app file to use the static files in the `dist/` directory by calling `app.use(express.static('dist'))` function
 
 ### 9/7/2026
+#### Backend
 1. Install `zod` to start validating requests.
 2. Create `user.schema.ts` for user-related `zod` schemas.
 3. Create `UserLoginCredentialSchema` and `LoginSuccessObjectSchema` for handling validation and infer types using `zod` schemas.
@@ -117,6 +118,15 @@
 5. Create `zodErrorHandler` for handling `ZodError` types (to be expanded further)
 6. Replace rough type assertions with `Schema.parse(target)` methods.
 7. Create `QuizWithQuestions` type, extended from `Quiz` with questions that have an array of `Question` types.
+
+#### Frontend
+1. Refactor `QuizList.tsx` component and pass `quizList` as prop
+2. Conditional rendering in two parts:
+    i. If `quizList` doesn't exist at all, then don't render `<QuizList />`
+    ii. If `quizList` exists, pass as props but if `props.quizList.length === 0` then render `<div>no quizzes</div>` conditionally
+    - Doing this would create conditional rendering for several different conditions
+3. Create `QuizList.test.tsx` component to test `QuizList` using two fake tests and ensure it passes tests for both renders of either list of quizzes or `no quizzes` text
+
 
 ### Potential To-Do for next time
 1. Consider refactoring all `axios` functions to `service` functions
