@@ -5,7 +5,8 @@ import jwt from "../utils/jwt.ts";
 import config from "../utils/config.ts";
 import type { LoginSuccessObject } from "../types/login.ts";
 import quizService from "../service/quizService.ts";
-import { LoginSuccsesObjectSchema } from "../schema/user.schema.ts";
+import { JWTVerifiedTokenObject } from "../schema/user.schema.ts";
+// import { LoginSuccsesObjectSchema } from "../schema/user.schema.ts";
 
 const quizRouter = Router();
 
@@ -52,15 +53,16 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 
     const quizId = Number(req.params.id);
 
-    const loginSuccessObject = jwt.verifyToken(token, config.SECRET);
+    const jwtVerifiedTokenObject = jwt.verifyToken(token, config.SECRET);
 
-    const loginSuccsesObjectSchemaParsed = LoginSuccsesObjectSchema.parse(loginSuccessObject);
+    const jwtVerifiedTokenObjectParsed = JWTVerifiedTokenObject.parse(jwtVerifiedTokenObject);
+
 
     let teacherId;
-    if (loginSuccsesObjectSchemaParsed.type == 'teacher') {
-      teacherId = loginSuccsesObjectSchemaParsed.id;
-    } else if (loginSuccsesObjectSchemaParsed.type == 'student') {
-      teacherId = loginSuccsesObjectSchemaParsed.teacher_id;
+    if (jwtVerifiedTokenObjectParsed.type == 'teacher') {
+      teacherId = jwtVerifiedTokenObjectParsed.id;
+    } else if (jwtVerifiedTokenObjectParsed.type == 'student') {
+      teacherId = jwtVerifiedTokenObjectParsed.teacher_id;
     }
 
     if (!teacherId) {
