@@ -64,9 +64,9 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
       throw new Error('No teacher Id found');
     }
 
-    const quiz = await quizService.getOneQuizById(quizId, teacherId);
+    const quizWithQuestions = await quizService.getQuizWithQuestionsById(quizId, teacherId);
 
-    res.status(200).json(quiz);
+    res.status(200).json(quizWithQuestions);
 
   } catch (error) {
     next(error);

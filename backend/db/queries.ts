@@ -1,5 +1,5 @@
 import { NotFoundError } from "../src/errors/http.ts";
-import type { Quiz } from "../src/types/quiz.ts";
+import type { Question, Quiz } from "../src/types/quiz.ts";
 import type { NewUserPasswordHashed, User, UserNoPassword } from "../src/types/user.ts";
 import pool from "./pool.ts";
 
@@ -112,6 +112,15 @@ const getOneQuizById = async (quizId: number, teacherId: number): Promise<Quiz> 
   return rows[0];
 };
 
+// Questions Queries
+const getQuestionsByQuizId = async (quizId: number): Promise<Question[]> => {
+  const { rows } = await pool.query<Question>(`
+    SELECT * FROM questions WHERE quiz_id = $1;
+  `, [quizId]);
+
+  return rows;
+};
+
 export default {
   getUsers,
   getUsersNoPassword,
@@ -122,4 +131,5 @@ export default {
   getAllQuizzes,
   getAllQuizzesByTeacherId,
   getOneQuizById,
+  getQuestionsByQuizId,
 };
