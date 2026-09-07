@@ -4,6 +4,7 @@ import { HttpError, ValidationError } from "../errors/http.ts";
 import type { DatabaseErrorDetails, HttpErrorDetails } from "../types/status.ts";
 import jsonwebtoken from 'jsonwebtoken';
 import { UserLoginCredentialsSchema } from "../schema/user.schema.ts";
+import { ZodError } from "zod";
 
 const { JsonWebTokenError } = jsonwebtoken;
 
@@ -96,6 +97,18 @@ const tokenErrorHandler = (err: unknown, _req: Request, res: Response, next: Nex
   }
 };
 
+const zodErrorHandler = (err: unknown, _req: Request, res: Response, next: NextFunction) => {
+  if (err instanceof ZodError) {
+    console.log('inside zodErrorHandler');
+
+    res
+      .status(400)
+      .json(err.issues[0])
+  } else {
+    next(err);
+  }
+}
+
 const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.log('inside errorHandler');
   console.error('An unexpected error occurred:', err);
@@ -111,5 +124,6 @@ export default {
   databaseErrorHandler,
   httpErrorHandler,
   tokenErrorHandler,
+  zodErrorHandler,
   errorHandler,
 };

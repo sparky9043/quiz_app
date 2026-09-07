@@ -20,6 +20,7 @@ app.use('/api/questions', questionRouter);
 app.use(middleware.databaseErrorHandler);
 app.use(middleware.httpErrorHandler);
 app.use(middleware.tokenErrorHandler);
+app.use(middleware.zodErrorHandler);
 app.use(middleware.errorHandler);
 
 export default app;
