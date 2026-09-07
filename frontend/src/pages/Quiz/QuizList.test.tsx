@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import QuizList from "./QuizList";
+import type { Quiz } from "../../types/quiz";
 
 const quizList = [
   {
@@ -24,4 +25,13 @@ describe('QuizList component', () => {
 
     expect(screen.getByText(/How to train your dragon/i)).toBeInTheDocument();
   });
+
+  it('Renders empty list if quiz list is empty', () => {
+    render (
+      <QuizList quizList={[] as Quiz[]} />
+    )
+
+    expect(screen.getByText(/no quizzes/i)).toBeInTheDocument();
+  });
+
 });
