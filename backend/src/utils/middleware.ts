@@ -103,11 +103,11 @@ const zodErrorHandler = (err: unknown, _req: Request, res: Response, next: NextF
 
     res
       .status(400)
-      .json(err.issues[0])
+      .json(err.issues[0]);
   } else {
     next(err);
   }
-}
+};
 
 const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.log('inside errorHandler');
