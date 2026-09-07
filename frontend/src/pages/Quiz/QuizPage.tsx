@@ -3,6 +3,7 @@ import type { Quiz } from "../../types/quiz";
 import axios from "axios";
 import { Navigate } from "react-router";
 import type { UserLoginSuccessObject } from "../../types/user";
+import QuizList from "./QuizList";
 // import { useNavigate } from "react-router";
 
 let token: string;
@@ -49,13 +50,7 @@ const QuizPage = () => {
   return (
     <div>
       <h2>Quiz Page</h2>
-      <ul>
-        {quizList && quizList.map(quiz => <li key={quiz.id}>
-          <div>
-            {quiz.title}
-          </div>
-        </li>)}
-      </ul>
+      <QuizList quizList={quizList} />
     </div>
   )
 }
