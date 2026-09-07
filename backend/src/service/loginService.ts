@@ -25,12 +25,12 @@ const login = async (userLoginCredentals: UserLoginCredentials): Promise<LoginSu
     id: savedUser.id,
     type: savedUser.type,
     username: savedUser.username,
-  } as LoginSuccessObject;
+  };
 
-  LoginSuccsesObjectSchema.parse(loginSuccessObject);
+  const loginSuccessObjectParsed = LoginSuccsesObjectSchema.parse(loginSuccessObject);
 
   if (savedUser.teacher_id) {
-    loginSuccessObject.teacher_id = savedUser.teacher_id;
+    loginSuccessObjectParsed.teacher_id = savedUser.teacher_id;
   }
 
   return loginSuccessObject;

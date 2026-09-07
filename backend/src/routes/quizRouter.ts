@@ -5,6 +5,7 @@ import jwt from "../utils/jwt.ts";
 import config from "../utils/config.ts";
 import type { LoginSuccessObject } from "../types/login.ts";
 import quizService from "../service/quizService.ts";
+import { LoginSuccsesObjectSchema } from "../schema/user.schema.ts";
 
 const quizRouter = Router();
 
@@ -51,13 +52,15 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 
     const quizId = Number(req.params.id);
 
-    const loginSuccessObject = jwt.verifyToken(token, config.SECRET) as LoginSuccessObject;
+    const loginSuccessObject = jwt.verifyToken(token, config.SECRET);
+
+    const loginSuccsesObjectSchemaParsed = LoginSuccsesObjectSchema.parse(loginSuccessObject);
 
     let teacherId;
-    if (loginSuccessObject.type == 'teacher') {
-      teacherId = loginSuccessObject.id;
-    } else if (loginSuccessObject.type == 'student') {
-      teacherId = loginSuccessObject.teacher_id;
+    if (loginSuccsesObjectSchemaParsed.type == 'teacher') {
+      teacherId = loginSuccsesObjectSchemaParsed.id;
+    } else if (loginSuccsesObjectSchemaParsed.type == 'student') {
+      teacherId = loginSuccsesObjectSchemaParsed.teacher_id;
     }
 
     if (!teacherId) {
