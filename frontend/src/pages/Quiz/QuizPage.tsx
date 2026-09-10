@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { Quiz } from "../../types/quiz";
 import { Navigate, Outlet } from "react-router";
 import type { UserLoginSuccessObject } from "../../types/user";
@@ -14,6 +13,7 @@ const setToken = (newToken: string) => {
 
 const QuizPage = () => {
   const userLoginInfo = localStorage.getItem('userLoginSuccess');
+  const quizQuery = useQuery<Quiz[]>({ queryKey: ['quizzes'], queryFn: () => quizService.getQuizzes(token) });
   
   if (!userLoginInfo) {
     return <Navigate to='/login' />
@@ -23,7 +23,6 @@ const QuizPage = () => {
 
   setToken(userLoginJSON.token);
 
-  const quizQuery = useQuery<Quiz[]>({ queryKey: ['quizzes'], queryFn: () => quizService.getQuizzes(token) });
 
   if (!quizQuery.data) {
     return <div>
