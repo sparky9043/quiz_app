@@ -1,4 +1,4 @@
-import { describe, test, after, beforeEach } from 'node:test';
+import { describe, test, after, before } from 'node:test';
 // import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import app from '../app.ts';
@@ -12,7 +12,7 @@ const quizUrl = '/api/quizzes';
 
 const agent = supertest.agent(app);
 
-beforeEach(async () => {
+before(async () => {
   await seed();
 });
 

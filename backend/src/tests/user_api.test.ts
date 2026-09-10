@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import app from '../app.ts';
-import { describe, test, after, beforeEach } from 'node:test';
+import { describe, test, after, before } from 'node:test';
 import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import type { UserNoPassword, User } from '../types/user.ts';
@@ -11,7 +11,7 @@ const api = supertest(app);
 
 const baseUrl = '/api/users';
 
-beforeEach(async () => {
+before(async () => {
   await seed();
 });
 
@@ -89,5 +89,6 @@ void describe('User Requests', () => {
 
 
 after(async () => {
+  await seed();
   await pool.end();
 });
