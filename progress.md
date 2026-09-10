@@ -128,6 +128,40 @@
 3. Create `QuizList.test.tsx` component to test `QuizList` using two fake tests and ensure it passes tests for both renders of either list of quizzes or `no quizzes` text
 
 
+### 9/10/2026
+#### Frontend
+1. Install `React Query` and replace `useEffect` with `query`
+    a. First install `@tanstack/react-query`
+    b. Then wrap target component with `<QueryProvider>`
+    c. Make sure to pass `queryClient` as a client to `<QueryProvider>`
+        - You can do this by creating a new instance of `QueryClient`
+    ```javascript
+        const queryClient = new QueryClient();
+    ```
+    d. Then you can use a child component of the parent component and access the query
+    ```javascript
+        const query = useQuery({
+            queryKey: ['key-name',
+                id // you can optionally provide id here for specific target
+            ], // use specific query key to cache data
+            queryFn: () => /* add service function here for fetching data */,
+        })
+
+        if (!query.data) {
+            throw new Error('some error message here')
+        }
+
+        // additional mapping logic...
+    ```
+2. Create extra routes in `<AppRoutes>` for accessing quiz with all questions
+3. Create `QuizWithQuestions` type
+
+#### Backend
+1. Replace `beforeEach` with `before` in all the backend tests for less expensive operations
+2. Add `seed()` command once all the tests are finished
+3. Initialize and run `POST` route `/api/quizzes` and make it require `jsonwebtoken`
+4. Make `quiz_api.test.ts` test send token and expect 201 
+
 ### Potential To-Do for next time
 1. GET Requests for questions with selections -> kind of like how I used quizzes and questions together?
 2. Maybe creating POST requests for questions, quizzes and answer selections?
