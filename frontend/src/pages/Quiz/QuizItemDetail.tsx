@@ -1,47 +1,41 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import type { QuizWithQuestions } from "../../types/quiz";
+import { useQuery } from "@tanstack/react-query";
+import quizService from "../../service/quizService";
 
 const QuizDetail = () => {
   const param = useParams();
 
-  const baseQuizUrl = '/api/quizzes';
+  const jwt = localStorage.getItem('userLoginSuccess');
 
-  const [quiz, setQuiz] = useState<QuizWithQuestions | null>(null);
+  if (!jwt) {
+    throw new Error('jsonwebtoken invalid');
+  }
 
-  useEffect(() => {
-    void (async () => {
-      const jwt = localStorage.getItem('userLoginSuccess');
+  const jwtParsed = JSON.parse(jwt);
 
-      if (!jwt) {
-        throw new Error('jsonwebtoken invalid');
-      }
+  const query = useQuery<QuizWithQuestions>({
+    queryKey: ['quizzes', param.id],
+    queryFn: () => quizService.getQuizWithQuestions(String(param.id), jwtParsed.token)
+  });
 
-      const jwtParsed = JSON.parse(jwt);
-
-      const response = await axios
-        .get<QuizWithQuestions>(`${baseQuizUrl}/${param.id}`, {
-          headers: {
-            "Authorization": "Bearer " + jwtParsed.token,
-          },
-        }) 
-        
-      const currentQuiz = response.data;
-
-      setQuiz(currentQuiz);
-
-    })();
-
-  }, [param]);
-
-  if (!quiz) {
-    return (<div>
-      No quiz has been loaded at this time
-    </div>
+  if (query.isLoading) {
+    return (
+      <div>
+        Loading...
+      </div>
     )
   }
 
+  if (!query.data) {
+    return (
+      <div>
+        There was an error fetching quiz details
+      </div>
+    )
+  }
+
+  const quiz = query.data;
 
   return (
     <div>
