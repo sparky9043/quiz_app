@@ -163,10 +163,5 @@
 4. Make `quiz_api.test.ts` test send token and expect 201 
 
 ### Potential To-Do for next time
-1. GET Requests for questions with selections -> kind of like how I used quizzes and questions together?
-2. Maybe creating POST requests for questions, quizzes and answer selections?
-    - First create quizzes
-    - Then Add qustions with their correct answer selections
-3. Maybe an `Attempt` model for creating an actual full quiz for students to take
-    - should be unique for each student
-    - should have only one combination
+1. Continue writing POST request route, service, and queries for creating empty quizzes
+2. Create POST request route for adding questions to existing quizzes
