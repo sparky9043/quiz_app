@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import type { Quiz } from "../../types/quiz";
 
 interface QuizItemProps {
@@ -8,7 +9,9 @@ const QuizItem = (props: QuizItemProps) => {
   return (
     <li>
       <div>
-        {props.quiz.title}
+        <Link to={`${props.quiz.id}`}>
+          {props.quiz.title}
+        </Link>
       </div>
     </li>
   )
