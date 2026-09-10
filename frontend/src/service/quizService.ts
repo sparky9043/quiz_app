@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Quiz } from "../types/quiz";
 
-const getQuizzes = async (token: string) => {
+const getQuizzes = async (token: string): Promise<Quiz[]> => {
   const quizUrl = '/api/quizzes';
 
   const response = await axios
@@ -13,8 +13,12 @@ const getQuizzes = async (token: string) => {
         },
       },
     );
+  
+  if (!response.data) {
+    throw new Error('There was an error fetching quizzes');
+  }
 
-  return response;
+  return response.data;
 };
 
 export default { getQuizzes };
