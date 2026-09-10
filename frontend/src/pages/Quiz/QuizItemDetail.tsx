@@ -20,9 +20,6 @@ const QuizDetail = () => {
 
       const jwtParsed = JSON.parse(jwt);
 
-
-      console.log(`${baseQuizUrl}/${param.id}`);
-
       const response = await axios
         .get<QuizWithQuestions>(`${baseQuizUrl}/${param.id}`, {
           headers: {
@@ -38,15 +35,26 @@ const QuizDetail = () => {
 
   }, [param]);
 
+  if (!quiz) {
+    return (<div>
+      No quiz has been loaded at this time
+    </div>
+    )
+  }
+
 
   return (
     <div>
-      Quiz Details
-      {quiz && <ul>
+      Questions
+      {quiz.questions.length ? <ul>
         {quiz.questions.map(question => <li key={question.id}>
           {question.content}
         </li>)}  
-      </ul>}
+      </ul>
+        : <p>
+          There are no questions in this quiz. Add questions
+        </p>
+      }
     </div>
   )
 };
