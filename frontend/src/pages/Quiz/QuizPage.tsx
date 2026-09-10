@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Quiz } from "../../types/quiz";
 import { Navigate, Outlet } from "react-router";
 import type { UserLoginSuccessObject } from "../../types/user";
 import QuizList from "./QuizList";
 import quizService from "../../service/quizService";
+import { useQuery } from "@tanstack/react-query";
 
 let token: string;
 
@@ -12,20 +13,6 @@ const setToken = (newToken: string) => {
 }
 
 const QuizPage = () => {
-  const [quizList, setQuizList] = useState<Quiz[]>([]);
-
-  useEffect(() => {
-    void (async () => {
-      if (!token) {
-        throw new Error('token invalid');
-      }
-
-      const response = await quizService.getQuizzes(token);
-
-      setQuizList(response.data);
-    })();
-  }, []);
-  
   const userLoginInfo = localStorage.getItem('userLoginSuccess');
   
   if (!userLoginInfo) {
@@ -36,13 +23,23 @@ const QuizPage = () => {
 
   setToken(userLoginJSON.token);
 
+  const quizQuery = useQuery<Quiz[]>({ queryKey: ['quizzes'], queryFn: () => quizService.getQuizzes(token) });
+
+  if (!quizQuery.data) {
+    return <div>
+      You have no quizzes
+    </div>
+  }
+
+  const quizList = quizQuery.data;
 
   return (
     <div>
       <h2>Quiz Page</h2>
       {
-        quizList && <QuizList quizList={quizList} />
+        quizQuery.data && <QuizList quizList={quizList} />
       }
+
       <Outlet />
     </div>
   )
