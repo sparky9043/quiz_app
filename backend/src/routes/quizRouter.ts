@@ -81,9 +81,9 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 });
 
 // Create Quiz (No Questions; to be handled later once a quiz is created successfully)
-quizRouter.post('/', (_req: Request, res: Response, next: NextFunction) => {
+quizRouter.post('/', middleware.tokenExtractor, (req: Request, res: Response, next: NextFunction) => {
   try {
-
+    console.log(req.get('authorization'));
     res.status(201).json({ succes: 'success' });
   } catch (error) {
     next(error);

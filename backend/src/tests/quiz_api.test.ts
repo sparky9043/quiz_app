@@ -1,5 +1,5 @@
 import { describe, test, after, before } from 'node:test';
-// import assert from 'node:assert';
+import assert from 'node:assert';
 import pool from '../../db/pool.ts';
 import app from '../app.ts';
 import supertest from 'supertest';
@@ -16,7 +16,7 @@ before(async () => {
   await seed();
 });
 
-void describe('After Logging in and accessing /api/quizzes', async () => {
+void describe('GET Requests to /api/quizzes post login', async () => {
   const response = await agent
     .post(loginUrl)
     .send(helper.defaultUserCredentials)
@@ -49,6 +49,27 @@ void describe('After Logging in and accessing /api/quizzes', async () => {
       .get(`${quizUrl}/${quizId}`)
       .set('Authorization', tokenBearer)
       .expect(404);
+  });
+});
+
+void describe('POST Requests to /api/quizzes post login', async () => {
+  const response = await agent
+    .post(loginUrl)
+    .send(helper.defaultUserCredentials)
+    .expect(200);
+  
+  const successObject = response.body as LoginSuccessObject;
+
+  const tokenBearer = "Bearer " + successObject.token;
+
+  void test('true is true', async () => {
+    await agent
+      .post(quizUrl)
+      .set('Authorization', tokenBearer)
+      .expect(201);
+    
+    console.log(tokenBearer);
+    assert.strictEqual(true, true);
   });
 });
 
