@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Quiz } from "../../types/quiz";
 import axios from "axios";
-import { Navigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import type { UserLoginSuccessObject } from "../../types/user";
 import QuizList from "./QuizList";
 // import { useNavigate } from "react-router";
@@ -53,6 +53,7 @@ const QuizPage = () => {
       {
         quizList && <QuizList quizList={quizList} />
       }
+      <Outlet />
     </div>
   )
 }
