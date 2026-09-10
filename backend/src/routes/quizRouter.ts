@@ -10,6 +10,7 @@ import { JWTVerifiedTokenObject } from "../schema/user.schema.ts";
 
 const quizRouter = Router();
 
+// Get all quizzes if jsonwebtoken is valid
 quizRouter.get('/', middleware.tokenExtractor, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.get('authorization');
@@ -43,6 +44,7 @@ quizRouter.get('/', middleware.tokenExtractor, async (req: Request, res: Respons
   }
 });
 
+// Get one quiz with all of its questions if jsonwebtoken is valid
 quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.get('authorization');
@@ -77,5 +79,16 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
     next(error);
   }
 });
+
+// Create Quiz (No Questions; to be handled later once a quiz is created successfully)
+quizRouter.post('/', (_req: Request, res: Response, next: NextFunction) => {
+  try {
+
+    res.status(201).json({ succes: 'success' });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 export default quizRouter;
