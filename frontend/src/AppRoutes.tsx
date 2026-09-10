@@ -4,6 +4,7 @@ import LoginPage from "./pages/Login/LoginPage";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import QuizPage from "./pages/Quiz/QuizPage";
+import QuizItemDetail from "./pages/Quiz/QuizItemDetail";
 
 const AppRoutes = createBrowserRouter([
   {
@@ -25,6 +26,12 @@ const AppRoutes = createBrowserRouter([
           {
             path: 'quiz',
             element: <QuizPage />,
+            children: [
+              {
+                path: ':id',
+                element: <QuizItemDetail />,
+              }
+            ]
           }
         ]
       }
