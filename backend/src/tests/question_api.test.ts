@@ -1,5 +1,5 @@
 // import supertest from "supertest";
-import { after, beforeEach, describe, test } from 'node:test';
+import { after, before, describe, test } from 'node:test';
 // import assert from 'node:assert';
 import supertest from 'supertest';
 import app from '../app.ts';
@@ -12,7 +12,7 @@ const api = supertest.agent(app);
 // const loginUrl = '/api/login';
 const questionsUrl = '/api/questions';
 
-beforeEach(async () => {
+before(async () => {
   await seed();
 });
 
