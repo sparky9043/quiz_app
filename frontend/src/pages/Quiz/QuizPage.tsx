@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import type { Quiz } from "../../types/quiz";
-import axios from "axios";
 import { Navigate, Outlet } from "react-router";
 import type { UserLoginSuccessObject } from "../../types/user";
 import QuizList from "./QuizList";
-// import { useNavigate } from "react-router";
+import quizService from "../../service/quizService";
 
 let token: string;
 
 const setToken = (newToken: string) => {
-  token = `Bearer ${newToken}`;
+  token = newToken;
 }
-
 
 const QuizPage = () => {
   const [quizList, setQuizList] = useState<Quiz[]>([]);
@@ -22,15 +20,7 @@ const QuizPage = () => {
         throw new Error('token invalid');
       }
 
-      const response = await axios
-        .get<Quiz[]>(
-          '/api/quizzes',
-          {
-            headers: {
-              "Authorization": token
-            },
-          },
-        );
+      const response = await quizService.getQuizzes(token);
 
       setQuizList(response.data);
     })();
