@@ -1,8 +1,8 @@
-import type { QuizWithQuestions } from "../../types/quiz";
+// import type { QuizWithQuestions } from "../../types/quiz";
 
 const QuizDetail = () => {
   return (
-
+    <div></div>
   )
 };
 
