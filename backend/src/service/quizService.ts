@@ -29,9 +29,15 @@ const getQuizWithQuestionsById = async(quizId: number, teacherId: number): Promi
 };
 
 // POST Quizzes
+const createQuizByTeacherId = async (teacherId: number, quizTitle: string): Promise<Quiz> => {
+  const quiz = await queries.createNewQuiz(teacherId, quizTitle);
+
+  return quiz;
+};
 
 export default {
   getAllQuizzes,
   getAllQuizzesByTeacherId,
   getQuizWithQuestionsById,
+  createQuizByTeacherId,
 };

@@ -121,6 +121,15 @@ const getQuestionsByQuizId = async (quizId: number): Promise<Question[]> => {
   return rows;
 };
 
+// Create New Quiz and Return it
+const createNewQuiz = async (teacherId: number, quizTitle: string): Promise<Quiz> => {
+  const { rows } = await pool.query<Quiz>(`
+    INSERT INTO quizzes (teacher_id, title) VALUES ($1, $2) RETURNING *;
+  `, [teacherId, quizTitle]);
+
+  return rows[0];
+};
+
 export default {
   getUsers,
   getUsersNoPassword,
@@ -132,4 +141,5 @@ export default {
   getAllQuizzesByTeacherId,
   getOneQuizById,
   getQuestionsByQuizId,
+  createNewQuiz,
 };
