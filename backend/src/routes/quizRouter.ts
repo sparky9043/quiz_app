@@ -5,7 +5,7 @@ import jwt from "../utils/jwt.ts";
 import config from "../utils/config.ts";
 import type { LoginSuccessObject } from "../types/login.ts";
 import quizService from "../service/quizService.ts";
-import { JWTVerifiedTokenObject } from "../schema/user.schema.ts";
+import { JWTVerifiedTokenObjectSchema } from "../schema/user.schema.ts";
 import type { QuizRequest } from "../types/quiz.ts";
 import { quizRequestSchema } from "../schema/quiz.schema.ts";
 // import * as z from 'zod';
@@ -60,7 +60,7 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 
     const jwtVerifiedTokenObject = jwt.verifyToken(token, config.SECRET);
 
-    const jwtVerifiedTokenObjectParsed = JWTVerifiedTokenObject.parse(jwtVerifiedTokenObject);
+    const jwtVerifiedTokenObjectParsed = JWTVerifiedTokenObjectSchema.parse(jwtVerifiedTokenObject);
 
 
     let teacherId;
@@ -94,7 +94,7 @@ quizRouter.post('/', middleware.tokenExtractor, (req: Request<unknown, unknown, 
 
     const jwtVerifiedTokenObject = jwt.verifyToken(token, config.SECRET);
 
-    const jwtVerifiedTokenObjectParsed = JWTVerifiedTokenObject.parse(jwtVerifiedTokenObject);
+    const jwtVerifiedTokenObjectParsed = JWTVerifiedTokenObjectSchema.parse(jwtVerifiedTokenObject);
 
     const userType = jwtVerifiedTokenObjectParsed.type;
 

@@ -13,7 +13,7 @@ const LoginSuccsesObjectSchema = z.object({
   teacher_id: z.number().optional(),
 });
 
-const JWTVerifiedTokenObject = z.object({
+const JWTVerifiedTokenObjectSchema = z.object({
   id: z.number(),
   username: z.string(),
   type: z.string(),
@@ -22,4 +22,4 @@ const JWTVerifiedTokenObject = z.object({
   exp: z.number(),
 });
 
-export { UserLoginCredentialsSchema, LoginSuccsesObjectSchema, JWTVerifiedTokenObject };
+export { UserLoginCredentialsSchema, LoginSuccsesObjectSchema, JWTVerifiedTokenObjectSchema };
