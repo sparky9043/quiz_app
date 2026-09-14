@@ -6,6 +6,9 @@ import config from "../utils/config.ts";
 import type { LoginSuccessObject } from "../types/login.ts";
 import quizService from "../service/quizService.ts";
 import { JWTVerifiedTokenObject } from "../schema/user.schema.ts";
+import type { QuizRequest } from "../types/quiz.ts";
+import { quizRequestSchema } from "../schema/quiz.schema.ts";
+// import * as z from 'zod';
 // import { LoginSuccsesObjectSchema } from "../schema/user.schema.ts";
 
 const quizRouter = Router();
@@ -81,9 +84,13 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 });
 
 // Create Quiz (No Questions; to be handled later once a quiz is created successfully)
-quizRouter.post('/', middleware.tokenExtractor, (req: Request, res: Response, next: NextFunction) => {
+quizRouter.post('/', middleware.tokenExtractor, (req: Request<unknown, unknown, QuizRequest>, res: Response, next: NextFunction) => {
   try {
     console.log(req.get('authorization'));
+    const quizRequest = quizRequestSchema.parse(req.body);
+
+    console.log(quizRequest);
+
     res.status(201).json({ succes: 'success' });
   } catch (error) {
     next(error);
