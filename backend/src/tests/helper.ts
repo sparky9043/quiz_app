@@ -1,4 +1,5 @@
 import pool from "../../db/pool.ts";
+import type { Quiz } from "../types/quiz.ts";
 import type { NewUserRequest, UserNoPassword } from "../types/user.ts";
 import config from "../utils/config.ts";
 import pwd from "../utils/pwd.ts";
@@ -50,12 +51,20 @@ const addUserToTable = async (newUser: NewUserRequest) => {
 };
 
 const getUsersInDb = async (): Promise<UserNoPassword[]> => {
-  const { rows } = await pool.query(`
+  const { rows } = await pool.query<UserNoPassword>(`
     SELECT id, username, type FROM users;
   `);
   
-  return rows as UserNoPassword[];
+  return rows;
 };
+
+const getQuizzesInDb = async (): Promise<Quiz[]> => {
+  const { rows } = await pool.query<Quiz>(`
+    SELECT * FROM quizzes;
+  `);
+
+  return rows;
+}
 
 const defaultUserCredentials = {
   username: 'ms_rivera',
@@ -68,6 +77,7 @@ export default {
   resetDbTables,
   addUserToTable,
   getUsersInDb,
+  getQuizzesInDb,
   defaultUserCredentials,
   expiredToken,
   newUsers,
