@@ -32,6 +32,10 @@ const AppRoutes = createBrowserRouter([
                 element: <QuizItemDetail />,
               }
             ]
+          },
+          {
+            path: 'quiz/create',
+            element: <div>create new quizzes</div>,
           }
         ]
       }
