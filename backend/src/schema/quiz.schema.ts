@@ -1,10 +1,13 @@
 import * as z from 'zod';
 
-const quizSchema = z.object({
-  id: z.number(),
+const quizRequestSchema = z.object({
   teacher_id: z.number(),
   title: z.string(),
   timestamps: z.string(),
 });
 
-export { quizSchema };
+const quizSchema = quizRequestSchema.extend({
+  id: z.number(),
+});
+
+export { quizRequestSchema, quizSchema };
