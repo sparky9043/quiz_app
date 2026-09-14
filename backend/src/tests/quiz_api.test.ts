@@ -53,7 +53,7 @@ void describe('GET Requests to /api/quizzes post login', async () => {
   });
 });
 
-void describe('POST Requests to /api/quizzes post login', async () => {
+void describe('POST Requests to /api/quizzes post login', () => {
 
   void test('Returns new quiz when teacher logged in, contains title and teacher_id', async () => {
     const teacherLoginResponse = await agent
@@ -68,7 +68,7 @@ void describe('POST Requests to /api/quizzes post login', async () => {
     const quizRequest: QuizRequest = {
       title: 'Data Structures and Algorithms Test',
       teacher_id: successObject.id,
-    }
+    };
 
     const response = await agent
       .post(quizUrl)
