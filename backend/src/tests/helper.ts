@@ -64,7 +64,7 @@ const getQuizzesInDb = async (): Promise<Quiz[]> => {
   `);
 
   return rows;
-}
+};
 
 const defaultUserCredentials = {
   username: 'ms_rivera',
