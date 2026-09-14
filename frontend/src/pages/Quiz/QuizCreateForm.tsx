@@ -48,6 +48,7 @@ const QuizCreateForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2>Create New Quiz</h2>
       <label htmlFor="title">
         <input
           id="title"
