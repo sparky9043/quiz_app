@@ -13,9 +13,12 @@ const DashboardNav = () => {
 
   return (
     <nav className="p-4">
-      <ul className="flex justify-between items-center">
+      <ul className="flex gap-2 items-center">
         <li>
           <Link to='quiz'>Quiz</Link>
+        </li>
+        <li>
+          <Link to='create/quiz'>Create Quiz</Link>
         </li>
         <li>
           <form onSubmit={handleLogout}>
