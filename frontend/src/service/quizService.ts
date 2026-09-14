@@ -1,8 +1,9 @@
 import axios from "axios";
-import type { Quiz, QuizWithQuestions } from "../types/quiz";
+import type { Quiz, QuizRequest, QuizWithQuestions } from "../types/quiz";
+
+const quizUrl = '/api/quizzes';
 
 const getQuizzes = async (token: string): Promise<Quiz[]> => {
-  const quizUrl = '/api/quizzes';
 
   const response = await axios
     .get<Quiz[]>(
@@ -22,7 +23,6 @@ const getQuizzes = async (token: string): Promise<Quiz[]> => {
 };
 
 const getQuizWithQuestions = async (quizId: string | number, token: string): Promise<QuizWithQuestions> => {
-  const quizUrl = '/api/quizzes';
 
   const response = await axios
     .get<QuizWithQuestions>(
@@ -39,6 +39,21 @@ const getQuizWithQuestions = async (quizId: string | number, token: string): Pro
   }
 
   return response.data;
-};  
+};
 
-export default { getQuizzes, getQuizWithQuestions };
+const createNewQuiz = async (quizRequest: QuizRequest, token: string): Promise<Quiz> => {
+  const response = await axios
+    .post<Quiz>(quizUrl, quizRequest, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+  return response.data;
+}
+
+export default {
+  getQuizzes,
+  getQuizWithQuestions,
+  createNewQuiz,
+};

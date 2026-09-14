@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import type { Quiz } from "../../types/quiz";
+import type { QuizRequest } from "../../types/quiz";
 import type { UserLoginSuccessObject } from "../../types/user";
+import quizService from "../../service/quizService";
 
 const QuizCreateForm = () => {
   const navigate = useNavigate();
@@ -24,16 +24,11 @@ const QuizCreateForm = () => {
         const quizRequest = {
           title,
           teacher_id: Number(teacherId),
-        }
+        } satisfies QuizRequest;
 
-        const response = await axios
-          .post<Quiz>('/api/quizzes', quizRequest, {
-            headers: {
-              "Authorization": `Bearer ${loginSuccessObjectParsed.token}`,
-            },
-          });
+        const savedQuiz = await quizService.createNewQuiz(quizRequest, loginSuccessObjectParsed.token);
         
-        navigate(`/dashboard/quiz/${response.data.id}`);
+        navigate(`/dashboard/quiz/${savedQuiz.id}`);
       }
 
     } catch (error) {
