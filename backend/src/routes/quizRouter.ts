@@ -86,7 +86,22 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 // Create Quiz (No Questions; to be handled later once a quiz is created successfully)
 quizRouter.post('/', middleware.tokenExtractor, (req: Request<unknown, unknown, QuizRequest>, res: Response, next: NextFunction) => {
   try {
-    console.log(req.get('authorization'));
+    const token = req.get('authorization');
+
+    if (!token) {
+      throw new Error('no token found in the request handler');
+    }
+
+    const jwtVerifiedTokenObject = jwt.verifyToken(token, config.SECRET);
+
+    const jwtVerifiedTokenObjectParsed = JWTVerifiedTokenObject.parse(jwtVerifiedTokenObject);
+
+    const userType = jwtVerifiedTokenObjectParsed.type;
+
+    if (userType != 'teacher') {
+      throw new Error('Only teachers are allowed to create tests');
+    }
+
     const quizRequest = quizRequestSchema.parse(req.body);
 
     console.log(quizRequest);
