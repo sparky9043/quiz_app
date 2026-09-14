@@ -1,7 +1,10 @@
-export interface Quiz {
-  id: number;
+export interface QuizRequest {
   teacher_id: number;
   title: string;
+}
+
+export interface Quiz extends QuizRequest {
+  id: number;
   timestamp: string;
 }
 
