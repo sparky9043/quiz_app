@@ -7,6 +7,7 @@ import helper from './helper.ts';
 import type { LoginSuccessObject } from '../types/login.ts';
 import seed from './seed.ts';
 import type { Quiz, QuizRequest } from '../types/quiz.ts';
+import type { HttpErrorDetails } from '../types/status.ts';
 
 const loginUrl = '/api/login';
 const quizUrl = '/api/quizzes';
@@ -78,6 +79,32 @@ void describe('POST Requests to /api/quizzes post login', () => {
     
     const savedQuiz = response.body as Quiz;
     assert.strictEqual(savedQuiz.title, quizRequest.title);
+  });
+
+  void test('Throw error if student is logged in and does not create quiz', async () => {
+
+    // Login as student
+    const loginResponse = await agent
+      .post(loginUrl)
+      .send({ username: 'alice_chen', password: 'password123' })
+      .expect(200);
+    
+    const successObject = loginResponse.body as LoginSuccessObject;
+
+    const tokenBearer = "Bearer " + successObject.token;
+
+    const quizRequest: QuizRequest = {
+      title: 'Data Structures and Algorithms Test',
+      teacher_id: successObject.id,
+    };
+
+    const response = await agent
+      .post(quizUrl)
+      .set('Authorization', tokenBearer)
+      .send(quizRequest)
+      .expect(500);
+  
+    assert((response.body as HttpErrorDetails).message.includes("Only teachers are allowed to create tests"));
   });
 });
 
