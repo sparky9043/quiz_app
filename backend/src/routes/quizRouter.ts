@@ -3,13 +3,9 @@ import { Router } from "express";
 import middleware from "../utils/middleware.ts";
 import jwt from "../utils/jwt.ts";
 import config from "../utils/config.ts";
-import type { LoginSuccessObject } from "../types/login.ts";
 import quizService from "../service/quizService.ts";
-import { JWTVerifiedTokenObjectSchema } from "../schema/user.schema.ts";
 import type { QuizRequest } from "../types/quiz.ts";
 import { quizRequestSchema } from "../schema/quiz.schema.ts";
-// import * as z from 'zod';
-// import { LoginSuccsesObjectSchema } from "../schema/user.schema.ts";
 
 const quizRouter = Router();
 
@@ -22,17 +18,17 @@ quizRouter.get('/', middleware.tokenExtractor, async (req: Request, res: Respons
       throw new Error('no token found in the request header');
     }
 
-    const loginSuccessObject = jwt.verifyToken(token, config.SECRET) as LoginSuccessObject;
+    const jwtVerifiedToken = jwt.verifyToken(token, config.SECRET);
 
     let teacherId;
 
     // Role based condition
     
     // Use user.id directly if teacher; Use user.teacher_id if student
-    if (loginSuccessObject.type === 'teacher') {
-      teacherId = loginSuccessObject.id;
-    } else if (loginSuccessObject.type === 'student') {
-      teacherId = loginSuccessObject.teacher_id;
+    if (jwtVerifiedToken.type === 'teacher') {
+      teacherId = jwtVerifiedToken.id;
+    } else if (jwtVerifiedToken.type === 'student') {
+      teacherId = jwtVerifiedToken.teacher_id;
     }
 
     if (!teacherId) {
@@ -58,16 +54,13 @@ quizRouter.get('/:id', middleware.tokenExtractor, async (req: Request, res: Resp
 
     const quizId = Number(req.params.id);
 
-    const jwtVerifiedTokenObject = jwt.verifyToken(token, config.SECRET);
-
-    const jwtVerifiedTokenObjectParsed = JWTVerifiedTokenObjectSchema.parse(jwtVerifiedTokenObject);
-
+    const jwtVerifiedToken = jwt.verifyToken(token, config.SECRET);
 
     let teacherId;
-    if (jwtVerifiedTokenObjectParsed.type == 'teacher') {
-      teacherId = jwtVerifiedTokenObjectParsed.id;
-    } else if (jwtVerifiedTokenObjectParsed.type == 'student') {
-      teacherId = jwtVerifiedTokenObjectParsed.teacher_id;
+    if (jwtVerifiedToken.type == 'teacher') {
+      teacherId = jwtVerifiedToken.id;
+    } else if (jwtVerifiedToken.type == 'student') {
+      teacherId = jwtVerifiedToken.teacher_id;
     }
 
     if (!teacherId) {
@@ -92,11 +85,9 @@ quizRouter.post('/', middleware.tokenExtractor, (req: Request<unknown, unknown, 
       throw new Error('no token found in the request handler');
     }
 
-    const jwtVerifiedTokenObject = jwt.verifyToken(token, config.SECRET);
+    const jwtVerifiedToken = jwt.verifyToken(token, config.SECRET);
 
-    const jwtVerifiedTokenObjectParsed = JWTVerifiedTokenObjectSchema.parse(jwtVerifiedTokenObject);
-
-    const userType = jwtVerifiedTokenObjectParsed.type;
+    const userType = jwtVerifiedToken.type;
 
     if (userType != 'teacher') {
       throw new Error('Only teachers are allowed to create tests');

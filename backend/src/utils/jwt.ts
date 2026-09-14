@@ -1,6 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 import config from './config.ts';
 import type { User } from '../types/user.ts';
+import { JWTVerifiedTokenObjectSchema } from '../schema/user.schema.ts';
 
 // Sign Token using userId and username as payload and provide token expiration time in minutes
 const signToken = (savedUser: User, tokenExpirationMinutes: number): string => {
@@ -28,7 +29,10 @@ const signToken = (savedUser: User, tokenExpirationMinutes: number): string => {
 
 const verifyToken = (rawToken: string, secretString: string) => {
   const payload = jsonwebtoken.verify(rawToken, secretString);
-  return payload;
+
+  const payloadParsed = JWTVerifiedTokenObjectSchema.parse(payload);
+
+  return payloadParsed;
 };
 
 export default {
