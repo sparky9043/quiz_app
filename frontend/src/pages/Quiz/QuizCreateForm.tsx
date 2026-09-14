@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import type { Quiz } from "../../types/quiz";
+import type { UserLoginSuccessObject } from "../../types/user";
 
 const QuizCreateForm = () => {
   const navigate = useNavigate();
@@ -12,9 +13,13 @@ const QuizCreateForm = () => {
       const loginSuccessObjectJSON = localStorage.getItem('userLoginSuccess');
       
       if (loginSuccessObjectJSON) {
-        const loginSuccessObjectParsed = JSON.parse(loginSuccessObjectJSON);
+        const loginSuccessObjectParsed: UserLoginSuccessObject = JSON.parse(loginSuccessObjectJSON);
         
         const teacherId = loginSuccessObjectParsed.id;
+
+        if (!teacherId || loginSuccessObjectParsed.type !== 'teacher') {
+          throw new Error('invalid teacher id or student user');
+        }
 
         const quizRequest = {
           title,
@@ -32,7 +37,9 @@ const QuizCreateForm = () => {
       }
 
     } catch (error) {
-      throw error;
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
     }
 
   };
