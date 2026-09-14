@@ -162,6 +162,35 @@
 3. Initialize and run `POST` route `/api/quizzes` and make it require `jsonwebtoken`
 4. Make `quiz_api.test.ts` test send token and expect 201 
 
+
+### 9/14/2026
+#### Backend
+1. Create `POST` request router to `/api/quizzes` for creating quizzes
+    - Verify JWT
+    - Ensure JWT type is teacher (students cannot create quizzes)
+    - Ensure `request.body` has `teacher_id` and `title`
+    - Throw error if `teacher_id` is invalid or `type` is not teacher
+2. Create tests for the `POST` route
+    - Successful `POST` request adds exactly 1 to quizzes db length
+    - Unsuccessful `POST` request does not change the size of quizzes db
+
+
+#### Frontend
+1. Create `createNewQuiz` service function
+    - Make sure axios sends a few things:
+    ```javascript
+        const quizRequest = {...}
+        const response = await axios.post<Quiz>('/api/quizzes', quizRequest, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        // Make sure to send quiz request and set Authorization header to "Bearer ..."
+    ```
+2. Successful quiz creation navigates page to `/dashboard/quiz/:id` page
+3. Disable submit button and input elements while submitting create quiz form
+
 ### Potential To-Do for next time
-1. Continue writing POST request route, service, and queries for creating empty quizzes
-2. Create POST request route for adding questions to existing quizzes
+1. Review how to mutate and clear cache with `@tanstack/react-query`
+2. Apply mutation to cache to clear and update upon creation
