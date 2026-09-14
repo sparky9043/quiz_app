@@ -11,6 +11,7 @@ const QuizCreateForm = () => {
     event.preventDefault();
     try {
       const loginSuccessObjectJSON = localStorage.getItem('userLoginSuccess');
+      setIsDisabled(true);
       
       if (loginSuccessObjectJSON) {
         const loginSuccessObjectParsed: UserLoginSuccessObject = JSON.parse(loginSuccessObjectJSON);
@@ -35,11 +36,14 @@ const QuizCreateForm = () => {
       if (error instanceof Error) {
         console.error(error.message);
       }
+    } finally {
+      setIsDisabled(false);
     }
 
   };
 
   const [title, setTitle] = useState<string>('');
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -50,9 +54,13 @@ const QuizCreateForm = () => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          disabled={isDisabled}
         />
       </label>
-      <button type="submit">create quiz</button>
+      <button
+        type="submit"
+        disabled={isDisabled}
+      >create quiz</button>
     </form>
   )
 };
