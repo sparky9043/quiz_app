@@ -98,13 +98,20 @@ void describe('POST Requests to /api/quizzes post login', () => {
       teacher_id: successObject.id,
     };
 
+    // Check db at start
+    const getDbAtStart = await helper.getQuizzesInDb();
+
     const response = await agent
       .post(quizUrl)
       .set('Authorization', tokenBearer)
       .send(quizRequest)
       .expect(500);
   
+    // Check db at end
+    const getDbAtEnd = await helper.getQuizzesInDb();
+
     assert((response.body as HttpErrorDetails).message.includes("Only teachers are allowed to create tests"));
+    assert.strictEqual(getDbAtEnd.length, getDbAtStart.length);
   });
 });
 
