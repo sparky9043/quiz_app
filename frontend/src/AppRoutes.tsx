@@ -5,6 +5,7 @@ import DashboardPage from "./pages/Dashboard/DashboardPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import QuizPage from "./pages/Quiz/QuizPage";
 import QuizItemDetail from "./pages/Quiz/QuizItemDetail";
+import QuizCreateForm from "./pages/Quiz/QuizCreateForm";
 
 const AppRoutes = createBrowserRouter([
   {
@@ -34,8 +35,8 @@ const AppRoutes = createBrowserRouter([
             ]
           },
           {
-            path: 'quiz/create',
-            element: <div>create new quizzes</div>,
+            path: 'create/quiz',
+            element: <QuizCreateForm />,
           }
         ]
       }
