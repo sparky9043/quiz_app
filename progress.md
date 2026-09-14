@@ -194,3 +194,4 @@
 ### Potential To-Do for next time
 1. Review how to mutate and clear cache with `@tanstack/react-query`
 2. Apply mutation to cache to clear and update upon creation
+3. DEBUG: After refresh, website crashes on every path except for main '/' path. See if you can find out why and fix it.
