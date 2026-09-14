@@ -2,6 +2,7 @@ import queries from "../../db/queries.ts";
 import type { Quiz, QuizWithQuestions } from "../types/quiz.ts";
 import questionService from "./questionService.ts";
 
+// GET Quizzes
 const getAllQuizzes = async () => {
   const quizzes = await queries.getAllQuizzes();
 
@@ -26,6 +27,8 @@ const getQuizWithQuestionsById = async(quizId: number, teacherId: number): Promi
 
   return quizWithQuestions;
 };
+
+// POST Quizzes
 
 export default {
   getAllQuizzes,
