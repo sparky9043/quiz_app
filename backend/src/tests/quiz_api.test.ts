@@ -6,6 +6,7 @@ import supertest from 'supertest';
 import helper from './helper.ts';
 import type { LoginSuccessObject } from '../types/login.ts';
 import seed from './seed.ts';
+import type { Quiz, QuizRequest } from '../types/quiz.ts';
 
 const loginUrl = '/api/login';
 const quizUrl = '/api/quizzes';
@@ -53,26 +54,34 @@ void describe('GET Requests to /api/quizzes post login', async () => {
 });
 
 void describe('POST Requests to /api/quizzes post login', async () => {
-  const response = await agent
-    .post(loginUrl)
-    .send(helper.defaultUserCredentials)
-    .expect(200);
-  
-  const successObject = response.body as LoginSuccessObject;
 
-  const tokenBearer = "Bearer " + successObject.token;
+  void test('Returns new quiz when teacher logged in, contains title and teacher_id', async () => {
+    const teacherLoginResponse = await agent
+      .post(loginUrl)
+      .send(helper.defaultUserCredentials)
+      .expect(200);
+    
+    const successObject = teacherLoginResponse.body as LoginSuccessObject;
 
-  void test('true is true', async () => {
-    await agent
+    const tokenBearer = "Bearer " + successObject.token;
+
+    const quizRequest: QuizRequest = {
+      title: 'Data Structures and Algorithms Test',
+      teacher_id: successObject.id,
+    }
+
+    const response = await agent
       .post(quizUrl)
       .set('Authorization', tokenBearer)
+      .send(quizRequest)
       .expect(201);
     
-    console.log(tokenBearer);
-    assert.strictEqual(true, true);
+    const savedQuiz = response.body as Quiz;
+    assert.strictEqual(savedQuiz.title, quizRequest.title);
   });
 });
 
 after(async () => {
+  await seed();
   await pool.end();
 });
