@@ -1,6 +1,6 @@
 import * as z from 'zod';
 import { quizSchema } from "../schema/quiz.schema.ts";
-import questionSchema from '../schema/question.schema.ts';
+import { questionSchema } from '../schema/question.schema.ts';
 
 export type Quiz = z.infer<typeof quizSchema>;
 

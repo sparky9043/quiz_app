@@ -6,4 +6,4 @@ const questionSchema = z.object({
   content: z.string(),
 });
 
-export default { questionSchema };
+export { questionSchema };
