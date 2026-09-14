@@ -1,9 +1,7 @@
-export interface Quiz {
-  id: number;
-  teacher_id: number;
-  title: string;
-  timestamp: string;
-}
+import * as z from 'zod';
+import { quizSchema } from "../schema/quiz.schema.ts";
+
+export type Quiz = z.infer<typeof quizSchema>;
 
 export interface Question {
   id: number;
