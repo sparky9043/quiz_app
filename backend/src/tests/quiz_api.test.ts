@@ -71,14 +71,21 @@ void describe('POST Requests to /api/quizzes post login', () => {
       teacher_id: successObject.id,
     };
 
+    // Check db start
+    const quizzesAtStart = await helper.getQuizzesInDb();
+
     const response = await agent
       .post(quizUrl)
       .set('Authorization', tokenBearer)
       .send(quizRequest)
       .expect(201);
+
+    //Check db at end
+    const quizzesAtEnd = await helper.getQuizzesInDb();
     
     const savedQuiz = response.body as Quiz;
     assert.strictEqual(savedQuiz.title, quizRequest.title);
+    assert.strictEqual(quizzesAtEnd.length, quizzesAtStart.length + 1);
   });
 
   void test('Throw error if student is logged in and does not create quiz', async () => {
@@ -99,7 +106,7 @@ void describe('POST Requests to /api/quizzes post login', () => {
     };
 
     // Check db at start
-    const getDbAtStart = await helper.getQuizzesInDb();
+    const quizzesAtStart = await helper.getQuizzesInDb();
 
     const response = await agent
       .post(quizUrl)
@@ -108,10 +115,10 @@ void describe('POST Requests to /api/quizzes post login', () => {
       .expect(500);
   
     // Check db at end
-    const getDbAtEnd = await helper.getQuizzesInDb();
+    const quizzesAtEnd = await helper.getQuizzesInDb();
 
     assert((response.body as HttpErrorDetails).message.includes("Only teachers are allowed to create tests"));
-    assert.strictEqual(getDbAtEnd.length, getDbAtStart.length);
+    assert.strictEqual(quizzesAtStart.length, quizzesAtEnd.length);
   });
 });
 
