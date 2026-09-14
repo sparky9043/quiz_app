@@ -1,13 +1,10 @@
 import * as z from 'zod';
 import { quizSchema } from "../schema/quiz.schema.ts";
+import questionSchema from '../schema/question.schema.ts';
 
 export type Quiz = z.infer<typeof quizSchema>;
 
-export interface Question {
-  id: number;
-  quiz_id: number; // points to Quiz
-  content: string;
-}
+export type Question = z.infer<typeof questionSchema>;
 
 export interface QuizWithQuestions extends Quiz {
   questions: Question[],
