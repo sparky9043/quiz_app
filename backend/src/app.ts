@@ -4,16 +4,11 @@ import middleware from './utils/middleware.ts';
 import loginRouter from './routes/login.ts';
 import quizRouter from './routes/quizRouter.ts';
 import questionRouter from './routes/questionRouter.ts';
-import path from 'node:path';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.static('dist'));
-
-app.get('*', (_req, res) => {
-  res.sendFile(path.resolve(__dirname, '../dist/index.html'));
-});
 
 // Routers
 app.use('/api/login', loginRouter);
